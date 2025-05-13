@@ -1,7 +1,7 @@
 ---
 // Import the global.css file here so that it is included on
 // all pages through the use of the <BaseHead /> component.
-import '../styles/global.css';
+// 不再使用import方式引入CSS，改为使用link标签
 import { SITE_TITLE } from '../consts';
 
 interface Props {
@@ -19,6 +19,9 @@ const { title, description, image = import.meta.env.BASE_URL + 'blog-placeholder
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <link rel="icon" type="image/svg+xml" href={import.meta.env.BASE_URL + 'favicon.svg'} />
+
+<!-- 直接引入CSS文件 -->
+<link rel="stylesheet" href={import.meta.env.BASE_URL + 'styles/global.css'} />
 <link rel="sitemap" href="/sitemap-index.xml" />
 <link
 	rel="alternate"
