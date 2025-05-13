@@ -38,3 +38,4 @@ jobs:
         with:
           folder: dist
           branch: gh-pages
+          clean: true # 删除目标分支上的旧文件
