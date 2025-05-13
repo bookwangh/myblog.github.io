@@ -1,0 +1,9 @@
+---
+// 这个组件用于提供正确的基础URL路径
+// 在开发环境和生产环境中都能正确工作
+const getBaseUrl = () => {
+  return import.meta.env.BASE_URL || '/';
+};
+
+export const baseUrl = getBaseUrl();
+---
