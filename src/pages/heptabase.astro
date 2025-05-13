@@ -1,0 +1,88 @@
+---
+import BaseHead from '../components/BaseHead.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
+---
+
+<!doctype html>
+<html lang="zh-CN">
+	<head>
+		<BaseHead title="HEPTABASE | hyuanverse" description={SITE_DESCRIPTION} />
+	</head>
+	<body>
+		<Header />
+		<main>
+			<div class="container">
+				<h1 class="page-title">HEPTABASE</h1>
+				<hr class="title-divider" />
+				
+				<div class="heptabase-layout">
+					<div class="main-feature">
+						<a href="/heptabase/intro">
+							<img src="/heptabase-preview.jpg" alt="Heptabase 白板" class="feature-image" />
+						</a>
+						<h2 class="feature-title">我如何用Heptabase 整理职缺</h2>
+						<p class="feature-views">322 views</p>
+						<p class="feature-description">这篇文章分享了我在工作中如何使用Heptabase 来有效地整理和跟踪职位信息。</p>
+					</div>
+					
+					<div class="article-sidebar">
+						<div class="sidebar-section">
+							<div class="sidebar-header">
+								<div class="tag-label">Heptabase 的Tag 要怎么用？ 4 个简单的方法</div>
+								<div class="tag-views">627 views</div>
+							</div>
+							
+							<a href="/heptabase/tag-system" class="sidebar-article">
+								<div class="article-thumb">
+									<img src="/heptabase-tag.jpg" alt="Heptabase 标签系统" />
+								</div>
+							</a>
+						</div>
+						
+						<div class="sidebar-section">
+							<div class="sidebar-header">
+								<div class="tag-label">Heptabase 白板可以怎么用？ 10 种简单的用法和例子</div>
+								<div class="tag-views">12.3k views</div>
+							</div>
+							
+							<a href="/heptabase/intro" class="sidebar-article">
+								<div class="article-thumb">
+									<img src="/heptabase-preview.jpg" alt="Heptabase 白板可以怎么用" />
+								</div>
+							</a>
+						</div>
+						
+						<div class="sidebar-section">
+							<div class="sidebar-header">
+								<div class="tag-label">Scrintal vs Heptabase: Heptabase 重度使用对Scrintal 的八个观察</div>
+								<div class="tag-views">764 views</div>
+							</div>
+							
+							<a href="/heptabase/vs-scrintal" class="sidebar-article">
+								<div class="article-thumb">
+									<img src="/heptabase-vs-scrintal.jpg" alt="Heptabase vs Scrintal" />
+								</div>
+							</a>
+						</div>
+						
+						<div class="sidebar-section">
+							<div class="sidebar-header">
+								<div class="tag-label">如何用Heptabase 创建个人Ticket System</div>
+								<div class="tag-views">525 views</div>
+							</div>
+							
+							<a href="/heptabase/ticket-system" class="sidebar-article">
+								<div class="article-thumb">
+									<img src="/heptabase-ticket.jpg" alt="Heptabase Ticket System" />
+								</div>
+							</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</main>
+		<Footer />
+	</body>
+</html>

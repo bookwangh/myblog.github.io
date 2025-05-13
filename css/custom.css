@@ -1,0 +1,24 @@
+/* 
+ * 自定义样式：覆盖默认标题样式
+ */
+
+/* 隐藏原始"Hexo"标题，并显示自定义标题 */
+.site-header .logo-section::before {
+  content: "读书写字";
+  display: block;
+  font-size: 2rem;
+  font-weight: 300;
+  text-align: center;
+  color: #333;
+  margin-bottom: 0.5rem;
+}
+
+/* 确保原始标题正确显示 */
+.site-header .site-title {
+  font-size: 0;  /* 隐藏原始文字，但保留链接功能 */
+}
+
+/* 调整间距以匹配原设计 */
+.site-header {
+  padding-top: 1.5rem;
+}

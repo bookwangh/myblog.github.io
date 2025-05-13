@@ -1,0 +1,41 @@
+---
+import HeaderLink from './HeaderLink.astro';
+import { SITE_TITLE } from '../consts';
+---
+
+<header class="header">
+	<div class="header-inner">
+		<div class="header-content">
+			<a href="/" class="site-title-link">
+				<h1 class="site-title">读书写字</h1>
+				<p class="site-subtitle">1%就好</p>
+			</a>
+		</div>
+	</div>
+</header>
+<style>
+	/* 头部样式已在全局CSS中定义 */
+	.social-links {
+		display: flex;
+		align-items: center;
+		gap: 1rem;
+	}
+
+	.social-links a {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		color: rgb(var(--gray-dark));
+		transition: color 0.2s ease;
+	}
+
+	.social-links a:hover {
+		color: rgb(var(--black));
+	}
+
+	@media (max-width: 768px) {
+		.social-links {
+			display: none;
+		}
+	}
+</style>

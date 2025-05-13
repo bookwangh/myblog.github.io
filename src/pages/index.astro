@@ -1,0 +1,165 @@
+---
+import BaseHead from '../components/BaseHead.astro';
+import Header from '../components/Header.astro';
+import Navigation from '../components/Navigation.astro';
+import Footer from '../components/Footer.astro';
+import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
+import { getCollection } from 'astro:content';
+
+// 获取最新的博客文章
+const posts = (await getCollection('blog')).sort(
+  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
+);
+
+// 获取最新的3篇文章
+const recentPosts = posts.slice(0, 3);
+
+// 模拟标签数据
+const tags = [
+	{ name: "思考", count: 12 },
+	{ name: "工具", count: 8 },
+	{ name: "Heptabase", count: 5 },
+	{ name: "知识管理", count: 7 },
+	{ name: "生产力", count: 4 },
+	{ name: "阅读", count: 6 },
+	{ name: "写作", count: 3 },
+];
+---
+
+<!doctype html>
+<html lang="zh-CN">
+	<head>
+		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+	</head>
+	<body>
+		<Header />
+		<main>
+			<Navigation />
+
+			<div class="main-content">
+				<div class="content-area">
+					<section class="featured-section">
+						<h2 class="page-title">最新文章</h2>
+						<div class="post-list">
+							{recentPosts.map((post) => (
+								<div class="post-card">
+									<a href={`/blog/${post.slug}/`}>
+										<img src={post.data.heroImage || '/placeholder-hero.jpg'} alt="" />
+										<h3>{post.data.title}</h3>
+										<p class="date">{post.data.pubDate.toLocaleDateString('zh-CN', {
+											year: 'numeric',
+											month: '2-digit',
+											day: '2-digit',
+										})}</p>
+										<p class="excerpt">{post.data.description}</p>
+									</a>
+								</div>
+							))}  
+						</div>
+					</section>
+
+					<section class="heptabase-section">
+						<h2 class="page-title">HEPTABASE</h2>
+						<div class="post-list">
+							<div class="post-card">
+								<a href="/heptabase/intro">
+									<img src="/heptabase-preview.jpg" alt="Heptabase 介绍" />
+									<h3>Heptabase 白板可以怎么用？10 种简单的用法和例子</h3>
+									<p class="date">2024-01-30</p>
+									<p class="excerpt">探索 Heptabase 白板的多种用法，从思维导图到知识管理</p>
+								</a>
+							</div>
+							<div class="post-card">
+								<a href="/heptabase/vs-scrintal">
+									<img src="/heptabase-vs-scrintal.jpg" alt="Heptabase vs Scrintal" />
+									<h3>Scrintal vs Heptabase: Heptabase 重度使用对 Scrintal 的八个观察</h3>
+									<p class="date">2024-01-22</p>
+									<p class="excerpt">比较两款流行的视觉知识管理工具的优缺点</p>
+								</a>
+							</div>
+							<div class="post-card">
+								<a href="/heptabase/tag-system">
+									<img src="/heptabase-tag.jpg" alt="Heptabase 标签系统" />
+									<h3>如何用Heptabase 创建个人Ticket System</h3>
+									<p class="date">2023-12-15</p>
+									<p class="excerpt">利用标签系统构建个人任务管理系统</p>
+								</a>
+							</div>
+						</div>
+					</section>
+				</div>
+				
+				<aside class="sidebar">
+					<div class="sidebar-section">
+						<h3 class="sidebar-title">1% 就好</h3>
+						<div class="sidebar-content">
+							<p>我是王浩，这里是我的思考与探索。希望对你有所启发</p>
+							<div class="subscribe-form">
+								<input type="email" placeholder="Type your email..." />
+								<button>Subscribe</button>
+							</div>
+						</div>
+					</div>
+					
+					<div class="sidebar-section">
+						<h3 class="sidebar-title">最近文章</h3>
+						<div class="sidebar-content">
+							<div class="recent-posts">
+								{recentPosts.map((post) => (
+									<a href={`/blog/${post.slug}/`} class="recent-post-item">
+										<img src={post.data.heroImage || '/placeholder-hero.jpg'} alt="" />
+										<div class="recent-post-content">
+											<h4 class="recent-post-title">{post.data.title}</h4>
+											<p class="recent-post-date">{post.data.pubDate.toLocaleDateString('zh-CN', {
+												year: 'numeric',
+												month: '2-digit',
+												day: '2-digit',
+											})}</p>
+										</div>
+									</a>
+								))}
+							</div>
+						</div>
+					</div>
+					
+					<div class="sidebar-section">
+						<h3 class="sidebar-title">标签</h3>
+						<div class="sidebar-content">
+							<div class="tag-cloud">
+								{tags.map((tag) => (
+									<a href={`/tags/${tag.name}/`} class="tag">{tag.name} ({tag.count})</a>
+								))}
+							</div>
+						</div>
+					</div>
+				</aside>
+			</div>
+		</main>
+		<Footer />
+	</body>
+</html>
+
+<style>
+	.hero {
+		padding: 4rem 0;
+		text-align: center;
+	}
+
+	.hero-content h1 {
+		font-size: 3rem;
+		font-weight: 500;
+		margin-bottom: 1rem;
+	}
+
+	.subtitle {
+		font-size: 1.2rem;
+		color: rgb(var(--gray));
+	}
+
+	.featured-section,
+	.heptabase-section {
+		padding: 2rem 0;
+	}
+
+	/* 其他样式已在全局CSS中定义 */
+</style>

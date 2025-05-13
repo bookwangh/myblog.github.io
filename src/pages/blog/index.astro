@@ -1,0 +1,118 @@
+---
+import BaseHead from '../../components/BaseHead.astro';
+import Header from '../../components/Header.astro';
+import Navigation from '../../components/Navigation.astro';
+import Footer from '../../components/Footer.astro';
+import { SITE_TITLE, SITE_DESCRIPTION } from '../../consts';
+import { getCollection } from 'astro:content';
+import FormattedDate from '../../components/FormattedDate.astro';
+
+const posts = (await getCollection('blog')).sort(
+	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
+);
+
+// 获取最近的3篇文章用于侧边栏
+const recentPosts = posts.slice(0, 3);
+
+// 模拟标签数据
+const tags = [
+	{ name: "思考", count: 12 },
+	{ name: "工具", count: 8 },
+	{ name: "Heptabase", count: 5 },
+	{ name: "知识管理", count: 7 },
+	{ name: "生产力", count: 4 },
+	{ name: "阅读", count: 6 },
+	{ name: "写作", count: 3 },
+];
+---
+
+<!doctype html>
+<html lang="zh-CN">
+	<head>
+		<BaseHead title="书记 | hyuanverse" description={SITE_DESCRIPTION} />
+	</head>
+	<body>
+		<Header />
+		<main>
+			<section class="hero blog-hero">
+				<div class="container">
+					<div class="hero-content">
+						<h1>hyuanverse</h1>
+						<p class="subtitle">探索思想与技术的交汇处</p>
+					</div>
+				</div>
+			</section>
+			
+			<Navigation />
+			<div class="main-content">
+				<div class="content-area">
+					
+					<div class="post-list">
+						{
+							posts.map((post) => (
+								<div class="post-card">
+									<a href={`/blog/${post.slug}/`}>
+										<img src={post.data.heroImage || '/placeholder-hero.jpg'} alt="" />
+										<h3>{post.data.title}</h3>
+										<p class="date">{post.data.pubDate.toLocaleDateString('zh-CN', {
+											year: 'numeric',
+											month: '2-digit',
+											day: '2-digit',
+										})}</p>
+										<p class="excerpt">{post.data.description}</p>
+									</a>
+								</div>
+							))
+						}
+					</div>
+				</div>
+				
+				<aside class="sidebar">
+					<div class="sidebar-section">
+						<h3 class="sidebar-title">1% 就好</h3>
+						<div class="sidebar-content">
+							<p>我是王浩，这里是我的思考与探索。希望对你有所启发</p>
+							<div class="subscribe-form">
+								<input type="email" placeholder="Type your email..." />
+								<button>Subscribe</button>
+							</div>
+						</div>
+					</div>
+					
+					<div class="sidebar-section">
+						<h3 class="sidebar-title">最近文章</h3>
+						<div class="sidebar-content">
+							<div class="recent-posts">
+								{recentPosts.map((post) => (
+									<a href={`/blog/${post.slug}/`} class="recent-post-item">
+										<img src={post.data.heroImage || '/placeholder-hero.jpg'} alt="" />
+										<div class="recent-post-content">
+											<h4 class="recent-post-title">{post.data.title}</h4>
+											<p class="recent-post-date">{post.data.pubDate.toLocaleDateString('zh-CN', {
+												year: 'numeric',
+												month: '2-digit',
+												day: '2-digit',
+											})}</p>
+										</div>
+									</a>
+								))}
+							</div>
+						</div>
+					</div>
+					
+					<div class="sidebar-section">
+						<h3 class="sidebar-title">标签</h3>
+						<div class="sidebar-content">
+							<div class="tag-cloud">
+								{tags.map((tag) => (
+									<a href={`/tags/${tag.name}/`} class="tag">{tag.name} ({tag.count})</a>
+								))}
+							</div>
+						</div>
+					</div>
+				</aside>
+			</div>
+		</main>
+		<Footer />
+	</body>
+</html>

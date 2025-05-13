@@ -1,0 +1,143 @@
+---
+import HeaderLink from './HeaderLink.astro';
+---
+
+<nav class="main-nav" id="main-nav">
+    <div class="nav-container">
+        <div class="nav-left">
+            <a href="/" class="logo-link">1%</a>
+        </div>
+        <div class="nav-center">
+            <div class="nav-item">
+                <a href="/heptabase" class="nav-link">HEPTABASE</a>
+            </div>
+            <div class="nav-item">
+                <a href="/blog" class="nav-link">书记</a>
+            </div>
+            <div class="nav-item">
+                <a href="/notes" class="nav-link">笔记</a>
+            </div>
+            <div class="nav-item">
+                <a href="/thinking" class="nav-link">思考</a>
+            </div>
+            <div class="nav-item">
+                <a href="/me" class="nav-link">我</a>
+            </div>
+        </div>
+        <div class="nav-right">
+            <a href="https://twitter.com" target="_blank" class="social-icon" aria-label="Twitter">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z"></path>
+                </svg>
+            </a>
+            <a href="https://instagram.com" target="_blank" class="social-icon" aria-label="Instagram">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                    <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                    <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                </svg>
+            </a>
+            <a href="/search" class="social-icon" aria-label="搜索">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="11" cy="11" r="8"></circle>
+                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                </svg>
+            </a>
+            <a href="#" class="theme-toggle social-icon" aria-label="切换主题">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="5"></circle>
+                    <line x1="12" y1="1" x2="12" y2="3"></line>
+                    <line x1="12" y1="21" x2="12" y2="23"></line>
+                    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                    <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                    <line x1="1" y1="12" x2="3" y2="12"></line>
+                    <line x1="21" y1="12" x2="23" y2="12"></line>
+                    <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                    <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                </svg>
+            </a>
+        </div>
+    </div>
+</nav>
+
+<script>
+    // 添加滚动时的阴影效果
+    document.addEventListener('DOMContentLoaded', function() {
+        const nav = document.getElementById('main-nav');
+        if (!nav) return;
+        
+        // 初始检查
+        checkScroll();
+        
+        // 监听滚动事件
+        window.addEventListener('scroll', checkScroll);
+        
+        function checkScroll() {
+            if (window.scrollY > 10) {
+                nav.classList.add('scrolled');
+            } else {
+                nav.classList.remove('scrolled');
+            }
+        }
+    });
+</script>
+
+<style>
+    .main-nav {
+        width: 100%;
+        border-top: 1px solid #eaeaea;
+        border-bottom: 1px solid #eaeaea;
+        background-color: #fff;
+        z-index: 1000;
+        position: sticky;
+        top: 0;
+        transition: box-shadow 0.3s ease;
+    }
+    
+    .main-nav.scrolled {
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+    }
+
+    .nav-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0.5rem 1.5rem;
+        max-width: var(--max-width);
+        margin: 0 auto;
+    }
+
+    .nav-left, .nav-right {
+        display: flex;
+        align-items: center;
+    }
+
+    .nav-center {
+        display: flex;
+        gap: 2rem;
+    }
+
+    .nav-right {
+        gap: 1.25rem;
+    }
+
+    .main-nav a {
+        color: #666;
+        font-size: 0.85rem;
+        font-weight: 400;
+        padding: 0.5rem 0;
+        transition: color 0.2s ease;
+        letter-spacing: 0.3px;
+    }
+
+    .main-nav a:hover,
+    .main-nav a.active {
+        color: #333;
+    }
+
+    .nav-right a {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+</style>
