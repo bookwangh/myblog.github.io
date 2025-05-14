@@ -46,8 +46,9 @@ body {
 	overflow-wrap: break-word;
 	color: var(--primary-color);
 	font-size: 16px;
-	line-height: 1.6;
-	letter-spacing: 0.01em;
+	line-height: 1.8;
+	letter-spacing: 0.02em;
+	word-spacing: 0.05em;
 }
 
 main {
@@ -224,10 +225,10 @@ hr {
 
 .site-title {
 	font-size: 1.8rem;
-	font-weight: 400;
+	font-weight: 500;
 	margin: 0;
 	color: var(--primary-color);
-	letter-spacing: -0.02em;
+	letter-spacing: 0.05em;
 }
 
 .site-subtitle {
