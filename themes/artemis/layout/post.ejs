@@ -1,0 +1,142 @@
+<article class="post-full">
+  <header class="post-header">
+    <h1 class="post-title"><%= page.title %></h1>
+    
+    <div class="post-meta">
+      <span class="post-date"><%= date(page.date, 'YYYY-MM-DD') %></span>
+      
+      <% if (page.categories && page.categories.length) { %>
+        <span class="post-categories">
+          <span class="meta-label">分类：</span>
+          <% page.categories.each(function(cat, index) { %>
+            <a href="<%- url_for(cat.path) %>"><%= cat.name %></a><%= index < page.categories.length - 1 ? ', ' : '' %>
+          <% }) %>
+        </span>
+      <% } %>
+      
+      <% if (page.tags && page.tags.length) { %>
+        <span class="post-tags">
+          <span class="meta-label">标签：</span>
+          <% page.tags.each(function(tag, index) { %>
+            <a href="<%- url_for(tag.path) %>"><%= tag.name %></a><%= index < page.tags.length - 1 ? ' ' : '' %>
+          <% }) %>
+        </span>
+      <% } %>
+    </div>
+  </header>
+  
+  <div class="post-content">
+    <%- page.content %>
+  </div>
+  
+  <% if (theme.disqus) { %>
+  <div class="post-comments">
+    <div id="disqus_thread"></div>
+    <script>
+      var disqus_shortname = '<%= theme.disqus %>';
+      var disqus_identifier = '<%= page.path %>';
+      var disqus_title = '<%= page.title %>';
+      var disqus_url = '<%= config.url %>/<%= page.path %>';
+      (function() {
+        var d = document, s = d.createElement('script');
+        s.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+      })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  </div>
+  <% } %>
+  
+  <div class="post-navigation">
+    <% if (page.prev) { %>
+      <div class="prev-post">
+        <span class="nav-label">上一篇</span>
+        <a href="<%- url_for(page.prev.path) %>" class="nav-link"><%= page.prev.title %></a>
+      </div>
+    <% } %>
+    <% if (page.next) { %>
+      <div class="next-post">
+        <span class="nav-label">下一篇</span>
+        <a href="<%- url_for(page.next.path) %>" class="nav-link"><%= page.next.title %></a>
+      </div>
+    <% } %>
+  </div>
+  
+  <!-- 添加相关文章区域 -->
+  <div class="related-posts">
+    <h3 class="related-posts-title">注明文章</h3>
+    <ul class="related-posts-list">
+      <% 
+      // 获取相同分类或标签的文章
+      let relatedPosts = [];
+      let currentTags = [];
+      let currentCategories = [];
+      
+      if (page.tags && page.tags.length) {
+        page.tags.forEach(tag => {
+          currentTags.push(tag.name);
+        });
+      }
+      
+      if (page.categories && page.categories.length) {
+        page.categories.forEach(category => {
+          currentCategories.push(category.name);
+        });
+      }
+      
+      site.posts.each(function(post) {
+        // 跳过当前文章
+        if (post.path === page.path) return;
+        
+        let isRelated = false;
+        let score = 0;
+        
+        // 检查标签匹配
+        if (post.tags && post.tags.length) {
+          post.tags.forEach(tag => {
+            if (currentTags.includes(tag.name)) {
+              isRelated = true;
+              score += 1;
+            }
+          });
+        }
+        
+        // 检查分类匹配
+        if (post.categories && post.categories.length) {
+          post.categories.forEach(category => {
+            if (currentCategories.includes(category.name)) {
+              isRelated = true;
+              score += 2; // 分类匹配给予更高权重
+            }
+          });
+        }
+        
+        if (isRelated) {
+          relatedPosts.push({
+            title: post.title,
+            path: post.path,
+            score: score
+          });
+        }
+      });
+      
+      // 按相关性评分排序
+      relatedPosts.sort((a, b) => b.score - a.score);
+      
+      // 取前4篇相关文章
+      relatedPosts = relatedPosts.slice(0, 4);
+      %>
+      
+      <% if (relatedPosts.length > 0) { %>
+        <% relatedPosts.forEach(function(post) { %>
+          <li class="related-post-item">
+            <a href="<%- url_for(post.path) %>"><%= post.title %></a>
+          </li>
+        <% }); %>
+      <% } else { %>
+        <li class="related-post-item">暂无相关文章</li>
+      <% } %>
+    </ul>
+  </div>
+</article>

@@ -1,0 +1,80 @@
+<div class="site-content">
+  <div class="home-container">
+    <h1 class="home-title">最新文章</h1>
+    
+    <div class="post-list">
+      <% if (page.posts.length > 0) { %>
+        <% page.posts.each(function(post) { %>
+          <article class="post-item">
+            <div class="post-layout">
+              <!-- 文章配图区域 -->
+              <div class="post-image">
+                <% 
+                let thumbnail = post.thumbnail || '/images/default-thumbnail.svg';
+                if (post.content && post.content.includes('<img')) {
+                  let imgMatch = post.content.match(/<img[^>]*src=[\'\"](.*?)[\'\"]/i);
+                  if (imgMatch && imgMatch[1]) {
+                    thumbnail = imgMatch[1];
+                  }
+                }
+                %>
+                <a href="<%- url_for(post.path) %>">
+                  <img src="<%= thumbnail %>" alt="<%= post.title %>" class="post-thumbnail">
+                </a>
+              </div>
+              
+              <!-- 文章内容区域 -->
+              <div class="post-content">
+                <h2 class="post-item-title">
+                  <a href="<%- url_for(post.path) %>"><%= post.title %></a>
+                </h2>
+                
+                <div class="post-item-meta">
+                  <span class="post-item-date"><%= date(post.date, 'YYYY-MM-DD') %></span>
+                  
+                  <% if (post.tags && post.tags.length) { %>
+                    <span class="post-item-tags">
+                      <% post.tags.each(function(tag, index) { %>
+                        <a href="<%- url_for(tag.path) %>"><%= tag.name %></a>
+                      <% }) %>
+                    </span>
+                  <% } %>
+                </div>
+                
+                <div class="post-item-excerpt">
+                  <% if (post.excerpt) { %>
+                    <%- post.excerpt %>
+                  <% } else { %>
+                    <% 
+                    let content = post.content;
+                    let plainText = content.replace(/<[^>]+>/g, '');
+                    let summary = plainText.length > 200 ? plainText.substring(0, 200) + '...' : plainText;
+                    %>
+                    <p><%= summary %></p>
+                  <% } %>
+                  
+                  <a href="<%- url_for(post.path) %>" class="read-more">阅读全文 →</a>
+                </div>
+              </div>
+            </div>
+          </article>
+        <% }) %>
+        
+        <% if (page.total > 1) { %>
+          <nav class="pagination">
+            <% if (page.prev) { %>
+              <a href="<%- url_for(page.prev_link) %>" class="prev">上一页</a>
+            <% } %>
+            <% if (page.next) { %>
+              <a href="<%- url_for(page.next_link) %>" class="next">下一页</a>
+            <% } %>
+          </nav>
+        <% } %>
+      <% } else { %>
+        <div class="no-posts">
+          <p>暂无文章</p>
+        </div>
+      <% } %>
+    </div>
+  </div>
+</div>

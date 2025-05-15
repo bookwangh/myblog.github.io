@@ -1,0 +1,25 @@
+name: Artemis
+url: https://github.com/Dreyer/hexo-theme-artemis
+
+menu:
+  文章: /
+  归档: /archives
+  我: /about
+  搜索: /search
+
+favicon: /favicon.png
+# logo: /new-logo.jpeg  # 注释掉logo设置，只显示网站标题
+
+# Comment
+# e.g disqus: seansun
+disqus:
+
+# Analytics
+mathjax: false
+google_analytics:
+
+# Copyright Infomation
+copyright:
+  since: 2025
+  name: 读书写字
+  url: https://bookwangh.github.io/myblog.github.io/

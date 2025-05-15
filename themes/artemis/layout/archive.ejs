@@ -1,0 +1,80 @@
+<div class="archive-container">
+  <header class="archive-header">
+    <h1 class="archive-title">
+      <% if (is_year()) { %>
+        <%= page.year %> 年的归档
+      <% } else if (is_month()) { %>
+        <%= page.year %> 年 <%= page.month %> 月的归档
+      <% } else if (is_category()) { %>
+        分类: <%= page.category %>
+      <% } else if (is_tag()) { %>
+        标签: <%= page.tag %>
+      <% } else { %>
+        文章归档
+      <% } %>
+    </h1>
+  </header>
+  
+  <% if (page.posts.length > 0) { %>
+    <div class="archive-posts">
+      <% 
+      var lastYear;
+      var lastMonth;
+      %>
+      <% page.posts.sort('date', -1).each(function(post) { %>
+        <% 
+        var year = date(post.date, 'YYYY');
+        var month = date(post.date, 'MM');
+        %>
+        
+        <% if (lastYear !== year) { %>
+          <div class="archive-year">
+            <h2 class="year-heading"><%= year %></h2>
+            <% lastMonth = null; %>
+        <% } %>
+        
+        <% if (lastMonth !== month) { %>
+          <div class="archive-month">
+            <h3 class="month-heading"><%= month %> 月</h3>
+          </div>
+        <% } %>
+        
+        <article class="archive-post">
+          <div class="post-date">
+            <time datetime="<%= date_xml(post.date) %>"><%= date(post.date, 'MM-DD') %></time>
+          </div>
+          <h4 class="post-title">
+            <a href="<%- url_for(post.path) %>"><%= post.title || '(无标题)' %></a>
+          </h4>
+          <% if (post.categories && post.categories.length) { %>
+            <div class="post-categories">
+              <% post.categories.each(function(cat, i) { %>
+                <a href="<%- url_for(cat.path) %>"><%= cat.name %></a><%= i !== post.categories.length - 1 ? ', ' : '' %>
+              <% }) %>
+            </div>
+          <% } %>
+        </article>
+        
+        <% 
+        lastYear = year;
+        lastMonth = month;
+        %>
+      <% }) %>
+    </div>
+    
+    <% if (page.total > 1) { %>
+      <nav class="pagination">
+        <% if (page.prev) { %>
+          <a href="<%- url_for(page.prev_link) %>" class="prev">上一页</a>
+        <% } %>
+        <% if (page.next) { %>
+          <a href="<%- url_for(page.next_link) %>" class="next">下一页</a>
+        <% } %>
+      </nav>
+    <% } %>
+  <% } else { %>
+    <div class="no-posts">
+      <p>暂无文章</p>
+    </div>
+  <% } %>
+</div>

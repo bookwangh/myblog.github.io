@@ -1,0 +1,128 @@
+<%- partial('partial/head') %>
+
+<div class="site-content">
+  <div class="page-header">
+    <h1 class="page-title">搜索</h1>
+  </div>
+  
+  <div class="search-container">
+    <div class="search-form">
+      <input type="text" id="search-input" placeholder="输入关键词搜索...">
+      <button id="search-button">搜索</button>
+    </div>
+    
+    <div id="search-results" class="search-results">
+      <!-- 搜索结果将在这里显示 -->
+      <p>请输入搜索关键词</p>
+    </div>
+  </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const searchInput = document.getElementById('search-input');
+  const searchButton = document.getElementById('search-button');
+  const searchResults = document.getElementById('search-results');
+  
+  // 获取所有文章的URL
+  const fetchPosts = async () => {
+    try {
+      const response = await fetch('/search-data.json');
+      if (!response.ok) {
+        throw new Error('无法获取搜索数据');
+      }
+      return await response.json();
+    } catch (error) {
+      console.error('搜索数据加载失败:', error);
+      searchResults.innerHTML = '<p>搜索功能暂时不可用</p>';
+      return [];
+    }
+  };
+  
+  // 搜索函数
+  const performSearch = async () => {
+    const query = searchInput.value.trim().toLowerCase();
+    if (query === '') {
+      searchResults.innerHTML = '<p>请输入搜索关键词</p>';
+      return;
+    }
+    
+    searchResults.innerHTML = '<p>搜索中...</p>';
+    
+    try {
+      const posts = await fetchPosts();
+      
+      const results = posts.filter(post => {
+        return post.title.toLowerCase().includes(query) || 
+               post.content.toLowerCase().includes(query);
+      });
+      
+      displayResults(results, query);
+    } catch (error) {
+      console.error('搜索失败:', error);
+      searchResults.innerHTML = '<p>搜索过程中发生错误</p>';
+    }
+  };
+  
+  // 显示搜索结果
+  const displayResults = (results, query) => {
+    if (results.length === 0) {
+      searchResults.innerHTML = '<p>没有找到匹配的结果</p>';
+      return;
+    }
+    
+    let html = '<div class="search-summary"><p>找到 ' + results.length + ' 个结果</p></div>';
+    
+    results.forEach(post => {
+      html += `
+        <div class="search-result-item">
+          <h2 class="result-title"><a href="${post.url}">${post.title}</a></h2>
+          <div class="result-date">${post.date}</div>
+          <div class="result-excerpt">${getExcerpt(post.content, query)}</div>
+        </div>
+      `;
+    });
+    
+    searchResults.innerHTML = html;
+  };
+  
+  // 获取摘要，突出显示关键词
+  const getExcerpt = (content, query) => {
+    const plainText = content.replace(/<[^>]+>/g, '');
+    const queryIndex = plainText.toLowerCase().indexOf(query.toLowerCase());
+    
+    if (queryIndex === -1) return plainText.substring(0, 150) + '...';
+    
+    const startIndex = Math.max(0, queryIndex - 50);
+    const endIndex = Math.min(plainText.length, queryIndex + query.length + 50);
+    let excerpt = plainText.substring(startIndex, endIndex);
+    
+    if (startIndex > 0) excerpt = '...' + excerpt;
+    if (endIndex < plainText.length) excerpt = excerpt + '...';
+    
+    // 高亮关键词
+    const regex = new RegExp(query, 'gi');
+    excerpt = excerpt.replace(regex, match => `<span class="highlight">${match}</span>`);
+    
+    return excerpt;
+  };
+  
+  // 事件监听
+  searchButton.addEventListener('click', performSearch);
+  searchInput.addEventListener('keypress', function(e) {
+    if (e.key === 'Enter') {
+      performSearch();
+    }
+  });
+  
+  // 如果URL中有查询参数，自动执行搜索
+  const urlParams = new URLSearchParams(window.location.search);
+  const queryParam = urlParams.get('q');
+  if (queryParam) {
+    searchInput.value = queryParam;
+    performSearch();
+  }
+});
+</script>
+
+<%- partial('partial/footer') %>
