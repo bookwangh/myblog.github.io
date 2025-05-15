@@ -1,0 +1,126 @@
+/* 自定义导航栏样式 - 参考图片样式 */
+.header {
+  padding: 0.8rem 1rem;
+  background-color: var(--background-color);
+  border-top: 1px solid #e5e5e5;
+  border-bottom: 1px solid #e5e5e5;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  transition: background-color 0.3s ease;
+}
+
+.header-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+}
+
+/* 博客标题容器 */
+.blog-title-container {
+  text-align: center;
+  margin-bottom: 1.5rem;
+  padding-bottom: 0.8rem;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.site-title {
+  font-size: 1.8rem;
+  font-weight: 600;
+  margin: 0;
+  color: var(--text-color);
+  text-decoration: none;
+  display: inline-block;
+}
+
+/* 导航内容区域 - 三部分布局 */
+.header-content {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  padding: 0 0.5rem;
+}
+
+.header-left {
+  /* 左侧空白区域 */
+  grid-column: 1;
+}
+
+/* 导航放在中间 */
+.nav {
+  grid-column: 2;
+  display: flex;
+  gap: 1.5rem; /* 调整导航项之间的间距，与参考图片一致 */
+  justify-content: center;
+}
+
+.header-right {
+  grid-column: 3;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.nav-item {
+  text-decoration: none;
+  color: var(--text-color);
+  font-weight: 400;
+  padding: 0.25rem 0;
+  position: relative;
+  font-size: 0.9rem;
+  letter-spacing: 0.02em;
+}
+
+.nav-item::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background-color: var(--text-color);
+  transition: width 0.2s ease;
+}
+
+.nav-item:hover::after,
+.nav-item.active::after {
+  width: 100%;
+}
+
+.icon-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.3rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-color);
+  opacity: 0.8;
+  transition: opacity 0.2s ease;
+}
+
+.icon-button:hover {
+  opacity: 1;
+}
+
+.theme-toggle {
+  position: relative;
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+  .menu-toggle {
+    display: flex;
+  }
+  
+  .nav {
+    gap: 1.5rem;
+  }
+  
+  .nav-item {
+    font-size: 1rem;
+  }
+}

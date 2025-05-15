@@ -3,38 +3,369 @@ import HeaderLink from './HeaderLink.astro';
 import { SITE_TITLE } from '../consts';
 ---
 
-<header class="header">
-	<div class="header-inner">
-		<div class="header-content">
-			<a href={import.meta.env.BASE_URL} class="site-title-link">
-				<h1 class="site-title">读书写字</h1>
-			</a>
-		</div>
-	</div>
-</header>
+<!-- Heptabase风格的导航栏 -->
 <style>
-	/* 头部样式已在全局CSS中定义 */
-	.social-links {
-		display: flex;
-		align-items: center;
-		gap: 1rem;
+    /* 强制删除所有边框 */
+    body .header-new, body .header, body header, html.dark-mode .header-new, html.dark-mode .header, html.dark-mode header {
+        border: none !important;
+        border-top: none !important;
+        border-bottom: none !important;
+    }
+</style>
+
+<header class="header-new" style="padding: 0.8rem 1rem 0; background-color: #fff; border: none !important; border-top: none !important; border-bottom: none !important; position: sticky; top: 0; z-index: 100;">
+    <div class="header-container" style="max-width: 1200px; margin: 0 auto; display: flex; flex-direction: column;">
+        <!-- 博客标题独立放置在上方 -->
+        <div class="blog-title-container" style="text-align: center; margin-bottom: 0; padding-bottom: 0.8rem;">
+            <a href="/" class="site-title" style="font-size: 1.5rem; font-weight: 500; color: #333; text-decoration: none;">读书写字</a>
+        </div>
+    </div>
+    <!-- 标题下方的分隔线，与页面等宽 -->
+    <div style="width: 100%; height: 1px; background-color: #e5e5e5; margin-bottom: 1.5rem;"></div>
+    
+    <div class="header-container" style="max-width: 1200px; margin: 0 auto; display: flex; flex-direction: column;">
+        
+        <div class="header-content" style="display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; padding: 0 0.5rem;">
+            <div class="header-left">
+                <!-- 空的左侧区域，保持布局平衡 -->
+            </div>
+            
+            <!-- 将导航项放在中间区域 -->
+            <nav class="nav" style="display: flex; gap: 1.5rem; justify-content: center;">
+                <a href="#articles" class="nav-item" id="nav-articles" style="text-decoration: none; color: #333; font-weight: 400; padding: 0.25rem 0; position: relative; font-size: 0.9rem; letter-spacing: 0.02em;">文章</a>
+                <a href="#videos" class="nav-item" id="nav-videos" style="text-decoration: none; color: #333; font-weight: 400; padding: 0.25rem 0; position: relative; font-size: 0.9rem; letter-spacing: 0.02em;">视频</a>
+                <a href="#about" class="nav-item" id="nav-about" style="text-decoration: none; color: #333; font-weight: 400; padding: 0.25rem 0; position: relative; font-size: 0.9rem; letter-spacing: 0.02em;">我</a>
+            </nav>
+            <div class="header-right" style="display: flex; justify-content: flex-end; align-items: center; gap: 0.75rem;">
+                <!-- 搜索按钮 -->
+                <button class="icon-button search-toggle" aria-label="搜索" id="searchToggle" style="background: none; border: none; cursor: pointer; padding: 0.3rem; display: flex; align-items: center; justify-content: center; color: #333; opacity: 0.8; transition: opacity 0.2s ease;">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                    </svg>
+                </button>
+
+                <!-- 暗色模式切换 -->
+                <button class="icon-button theme-toggle" aria-label="切换暗色模式" onclick="toggleTheme()" style="background: none; border: none; cursor: pointer; padding: 0.3rem; display: flex; align-items: center; justify-content: center; color: #333; opacity: 0.8; transition: opacity 0.2s ease;">
+                    <svg class="sun-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                    <svg class="moon-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </div>
+    <!-- 导航栏底部的分隔线，与页面等宽 -->
+    <div style="width: 100%; height: 1px; background-color: #e5e5e5; margin-top: 1rem;"></div>
+</header>
+
+<style>
+/* 导航栏样式 - 参考图片样式 */
+.header-new {
+  padding: 0.8rem 1rem;
+  background-color: #fff;
+  border-top: 1px solid #e5e5e5;
+  border-bottom: 1px solid #e5e5e5;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.header-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.blog-title-container {
+  text-align: center;
+  margin-bottom: 1.5rem;
+  padding-bottom: 0.8rem;
+}
+
+.site-title {
+  font-size: 1.5rem;
+  font-weight: 500;
+  color: #333;
+  text-decoration: none;
+}
+
+.header-content {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  padding: 0 0.5rem;
+}
+
+.nav {
+  display: flex;
+  gap: 1.5rem;
+  justify-content: center;
+}
+
+.nav-item {
+  text-decoration: none;
+  color: #333;
+  font-weight: 400;
+  padding: 0.25rem 0;
+  position: relative;
+  font-size: 0.9rem;
+  letter-spacing: 0.02em;
+}
+
+.nav-item::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background-color: #333;
+  transition: width 0.2s ease;
+}
+
+.nav-item:hover::after,
+.nav-item.active::after {
+  width: 100%;
+}
+
+.header-right {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.icon-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.3rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #333;
+  opacity: 0.8;
+  transition: opacity 0.2s ease;
+}
+
+.icon-button:hover {
+  opacity: 1;
+}
+
+.sun-icon {
+  display: block;
+}
+
+.moon-icon {
+  display: none;
+}
+
+:global(html.dark-mode) .header-new {
+  background-color: #1A1A1A;
+  border-color: #333;
+}
+
+:global(html.dark-mode) .nav-item,
+:global(html.dark-mode) .site-title,
+:global(html.dark-mode) .icon-button {
+  color: #fff;
+}
+
+:global(html.dark-mode) .nav-item::after {
+  background-color: #fff;
+}
+
+:global(html.dark-mode) .sun-icon {
+  display: none;
+}
+
+:global(html.dark-mode) .moon-icon {
+  display: block;
+}
+</style>
+
+<script>
+// 导航项激活状态
+document.addEventListener('DOMContentLoaded', () => {
+  // 获取导航项
+  const navArticles = document.getElementById('nav-articles');
+  const navVideos = document.getElementById('nav-videos');
+  const navAbout = document.getElementById('nav-about');
+
+  // 默认激活文章导航
+  navArticles.classList.add('active');
+
+  // 点击导航项切换内容
+  navArticles.addEventListener('click', (e) => {
+    e.preventDefault();
+    setActiveNav(navArticles);
+    // 触发内容区域的文章标签点击
+    const articlesTab = document.getElementById('articles-tab');
+    if (articlesTab) articlesTab.click();
+  });
+
+  navVideos.addEventListener('click', (e) => {
+    e.preventDefault();
+    setActiveNav(navVideos);
+    // 触发内容区域的视频标签点击
+    const videosTab = document.getElementById('videos-tab');
+    if (videosTab) videosTab.click();
+  });
+
+  navAbout.addEventListener('click', (e) => {
+    e.preventDefault();
+    setActiveNav(navAbout);
+    // 触发内容区域的我标签点击
+    const aboutTab = document.getElementById('about-tab');
+    if (aboutTab) aboutTab.click();
+  });
+
+  // 设置激活导航项
+  function setActiveNav(activeNav) {
+    // 移除所有导航项的激活状态
+    navArticles.classList.remove('active');
+    navVideos.classList.remove('active');
+    navAbout.classList.remove('active');
+
+    // 添加当前导航项的激活状态
+    activeNav.classList.add('active');
+  }
+});
+</script>
+
+<style>
+/* 导航栏样式 - 参考图片样式 */
+.header-new {
+  padding: 0.8rem 1rem;
+  background-color: #fff;
+  border-top: 1px solid #e5e5e5;
+  border-bottom: 1px solid #e5e5e5;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+		border: none;
+		cursor: pointer;
+		padding: 0;
 	}
 
-	.social-links a {
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		color: rgb(var(--gray-dark));
-		transition: color 0.2s ease;
+	.hamburger-menu span {
+		display: block;
+		width: 100%;
+		height: 2px;
+		background-color: #000000;
+		transition: all 0.3s ease;
 	}
 
-	.social-links a:hover {
-		color: rgb(var(--black));
-	}
-
+	/* 响应式设计 */
 	@media (max-width: 768px) {
-		.social-links {
+		.header-nav {
 			display: none;
+		}
+
+		.hamburger-menu {
+			display: flex;
 		}
 	}
 </style>
+
+<!-- 暗色模式检查已移至全局theme.js脚本 -->
+
+<script>
+	// 导航项激活状态
+	document.addEventListener('DOMContentLoaded', () => {
+		// 获取导航项
+		const navArticles = document.getElementById('nav-articles');
+		const navVideos = document.getElementById('nav-videos');
+		const navAbout = document.getElementById('nav-about');
+
+		// 默认激活文章导航
+		navArticles.classList.add('active');
+
+		// 点击导航项切换内容
+		navArticles.addEventListener('click', (e) => {
+			e.preventDefault();
+			setActiveNav(navArticles);
+			// 触发内容区域的文章标签点击
+			document.getElementById('articles-tab').click();
+		});
+
+		navVideos.addEventListener('click', (e) => {
+			e.preventDefault();
+			setActiveNav(navVideos);
+			// 触发内容区域的视频标签点击
+			document.getElementById('videos-tab').click();
+		});
+
+		navAbout.addEventListener('click', (e) => {
+			e.preventDefault();
+			setActiveNav(navAbout);
+			// 触发内容区域的我标签点击
+			document.getElementById('about-tab').click();
+		});
+
+		// 设置激活导航项
+		function setActiveNav(activeNav) {
+			// 移除所有导航项的激活状态
+			navArticles.classList.remove('active');
+			navVideos.classList.remove('active');
+			navAbout.classList.remove('active');
+
+			// 添加当前导航项的激活状态
+			activeNav.classList.add('active');
+		}
+
+		// 暗色模式切换已移至全局theme.js脚本中
+
+		// 移动端汉堡菜单
+		const hamburgerMenu = document.querySelector('.hamburger-menu');
+		if (hamburgerMenu) {
+			hamburgerMenu.addEventListener('click', () => {
+				// 在这里添加移动端菜单展开逻辑
+				// 创建一个移动端导航菜单
+				const mobileNav = document.querySelector('.mobile-nav');
+				if (mobileNav) {
+					mobileNav.classList.toggle('active');
+					hamburgerMenu.classList.toggle('active');
+				} else {
+					// 如果菜单不存在，创建一个
+					const newMobileNav = document.createElement('div');
+					newMobileNav.className = 'mobile-nav active';
+					newMobileNav.innerHTML = `
+						<a href="#articles" class="mobile-nav-item">文章</a>
+						<a href="#videos" class="mobile-nav-item">视频</a>
+						<a href="#about" class="mobile-nav-item">我</a>
+					`;
+					document.body.appendChild(newMobileNav);
+					hamburgerMenu.classList.add('active');
+
+					// 添加移动端菜单项点击事件
+					const mobileNavItems = newMobileNav.querySelectorAll('.mobile-nav-item');
+					mobileNavItems.forEach((item, index) => {
+						item.addEventListener('click', (e) => {
+							e.preventDefault();
+							newMobileNav.classList.remove('active');
+							hamburgerMenu.classList.remove('active');
+							// 触发相应的导航项点击
+							if (index === 0) document.getElementById('nav-articles').click();
+							else if (index === 1) document.getElementById('nav-videos').click();
+							else if (index === 2) document.getElementById('nav-about').click();
+						});
+					});
+				}
+			});
+		}
+	});
+</script>

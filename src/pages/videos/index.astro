@@ -1,0 +1,119 @@
+---
+import BaseHead from '../../components/BaseHead.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import { SITE_TITLE, SITE_DESCRIPTION } from '../../consts';
+import { getCollection } from 'astro:content';
+import FormattedDate from '../../components/FormattedDate.astro';
+
+// 获取所有视频内容并按日期排序
+const videos = (await getCollection('videos')).sort(
+	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
+);
+---
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+	<head>
+		<BaseHead title={`视频 | ${SITE_TITLE}`} description={SITE_DESCRIPTION} />
+		<style>
+			main {
+				width: 100%;
+				max-width: 1200px;
+				margin: 0 auto;
+				padding: 1rem;
+			}
+			.video-grid {
+				display: grid;
+				grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+				gap: 2rem;
+				padding: 0;
+			}
+			.video-card {
+				border-radius: 8px;
+				overflow: hidden;
+				transition: transform 0.2s ease;
+				box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+				background-color: #fff;
+			}
+			.video-card:hover {
+				transform: translateY(-5px);
+			}
+			.thumbnail {
+				width: 100%;
+				aspect-ratio: 16 / 9;
+				object-fit: cover;
+			}
+			.video-content {
+				padding: 1rem;
+			}
+			.video-title {
+				margin: 0;
+				font-size: 1.25rem;
+				font-weight: 600;
+				color: #333;
+			}
+			.video-date {
+				margin: 0.5rem 0;
+				color: #666;
+				font-size: 0.875rem;
+			}
+			.video-description {
+				color: #444;
+				font-size: 0.95rem;
+				line-height: 1.5;
+			}
+			.page-title {
+				font-size: 2rem;
+				margin-bottom: 2rem;
+				color: #333;
+				text-align: center;
+			}
+			
+			/* 暗色模式样式 */
+			html.dark-mode .video-card {
+				background-color: #222;
+				box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+			}
+			html.dark-mode .video-title {
+				color: #e0e0e0;
+			}
+			html.dark-mode .video-date {
+				color: #aaa;
+			}
+			html.dark-mode .video-description {
+				color: #ccc;
+			}
+			html.dark-mode .page-title {
+				color: #e0e0e0;
+			}
+		</style>
+	</head>
+	<body>
+		<Header />
+		<main>
+			<h1 class="page-title">视频</h1>
+			<div class="video-grid">
+				{
+					videos.map((video) => (
+						<a href={`/videos/${video.slug}/`} class="video-card">
+							<img 
+								src={video.data.thumbnailImage || '/placeholder-video.jpg'} 
+								alt={video.data.title} 
+								class="thumbnail" 
+							/>
+							<div class="video-content">
+								<h2 class="video-title">{video.data.title}</h2>
+								<p class="video-date">
+									<FormattedDate date={video.data.pubDate} />
+								</p>
+								<p class="video-description">{video.data.description}</p>
+							</div>
+						</a>
+					))
+				}
+			</div>
+		</main>
+		<Footer />
+	</body>
+</html>

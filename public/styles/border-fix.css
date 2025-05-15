@@ -1,0 +1,39 @@
+/* 彻底删除顶部和底部的线条 */
+body .header-new,
+body .header,
+body header,
+html.dark-mode .header-new,
+html.dark-mode .header,
+html.dark-mode header {
+  border-top: none !important;
+  border-bottom: none !important;
+}
+
+/* 只保留标题下方和导航栏底部的分隔线 */
+body .header-new > div:nth-child(2),
+html.dark-mode .header-new > div:nth-child(2) {
+  /* 标题下方的分隔线 */
+  display: block !important;
+  width: 100% !important;
+  height: 1px !important;
+  background-color: #e5e5e5 !important;
+  margin-bottom: 1.5rem !important;
+}
+
+html.dark-mode .header-new > div:nth-child(2) {
+  background-color: #333 !important;
+}
+
+body .header-new > div:last-child,
+html.dark-mode .header-new > div:last-child {
+  /* 导航栏底部的分隔线 */
+  display: block !important;
+  width: 100% !important;
+  height: 1px !important;
+  background-color: #e5e5e5 !important;
+  margin-top: 1rem !important;
+}
+
+html.dark-mode .header-new > div:last-child {
+  background-color: #333 !important;
+}

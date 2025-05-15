@@ -1,0 +1,65 @@
+/* 极端方法：隐藏页面顶部的所有可能的元素，只显示我们需要的内容 */
+
+/* 隐藏页面顶部的所有水平线 */
+body::before,
+body::after,
+body > *::before,
+body > *::after,
+hr,
+body > hr,
+body > div > hr,
+body > div,
+body > div:first-child,
+body > div:nth-child(2),
+body > div:nth-child(3) {
+  border: none !important;
+  border-top: none !important;
+  border-bottom: none !important;
+  background: transparent !important;
+  height: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  display: none !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
+}
+
+/* 确保header没有边框 */
+header,
+.header,
+.header-new {
+  border: none !important;
+  border-top: none !important;
+  border-bottom: none !important;
+}
+
+/* 只保留我们需要的两条线 */
+.header-new > div:nth-child(2) {
+  display: block !important;
+  width: 100% !important;
+  height: 1px !important;
+  background-color: #e5e5e5 !important;
+  margin-bottom: 1.5rem !important;
+  border: none !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+html.dark-mode .header-new > div:nth-child(2) {
+  background-color: #333 !important;
+}
+
+.header-new > div:last-child {
+  display: block !important;
+  width: 100% !important;
+  height: 1px !important;
+  background-color: #e5e5e5 !important;
+  margin-top: 1rem !important;
+  border: none !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+html.dark-mode .header-new > div:last-child {
+  background-color: #333 !important;
+}

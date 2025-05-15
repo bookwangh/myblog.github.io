@@ -1,0 +1,124 @@
+/* 导航栏样式覆盖 - 确保与参考图片一致 */
+:root {
+  --nav-border-color: #e5e5e5;
+  --nav-text-color: #333;
+  --nav-font-size: 0.9rem;
+  --nav-font-weight: 400;
+  --nav-letter-spacing: 0.02em;
+  --nav-item-gap: 1.5rem;
+  --icon-button-gap: 0.75rem;
+}
+
+/* 重置所有可能影响导航栏的样式 */
+header, .header {
+  padding: 0.8rem 1rem !important;
+  background-color: #fff !important;
+  border-top: 1px solid var(--nav-border-color) !important;
+  border-bottom: 1px solid var(--nav-border-color) !important;
+  position: sticky !important;
+  top: 0 !important;
+  z-index: 100 !important;
+  margin: 0 !important;
+}
+
+.header-container {
+  max-width: 1200px !important;
+  margin: 0 auto !important;
+  display: flex !important;
+  flex-direction: column !important;
+}
+
+.blog-title-container {
+  text-align: center !important;
+  margin-bottom: 1.5rem !important;
+  padding-bottom: 0.8rem !important;
+}
+
+.site-title {
+  font-size: 1.5rem !important;
+  font-weight: 500 !important;
+  color: var(--nav-text-color) !important;
+  text-decoration: none !important;
+}
+
+.header-content {
+  display: grid !important;
+  grid-template-columns: 1fr auto 1fr !important;
+  align-items: center !important;
+  padding: 0 0.5rem !important;
+}
+
+.nav {
+  display: flex !important;
+  gap: var(--nav-item-gap) !important;
+  justify-content: center !important;
+}
+
+.nav-item {
+  text-decoration: none !important;
+  color: var(--nav-text-color) !important;
+  font-weight: var(--nav-font-weight) !important;
+  padding: 0.25rem 0 !important;
+  position: relative !important;
+  font-size: var(--nav-font-size) !important;
+  letter-spacing: var(--nav-letter-spacing) !important;
+  border: none !important;
+  background: none !important;
+}
+
+.nav-item::after {
+  content: '' !important;
+  position: absolute !important;
+  bottom: -2px !important;
+  left: 0 !important;
+  width: 0 !important;
+  height: 1px !important;
+  background-color: var(--nav-text-color) !important;
+  transition: width 0.2s ease !important;
+}
+
+.nav-item:hover::after,
+.nav-item.active::after {
+  width: 100% !important;
+}
+
+.header-right {
+  display: flex !important;
+  justify-content: flex-end !important;
+  align-items: center !important;
+  gap: var(--icon-button-gap) !important;
+}
+
+.icon-button {
+  background: none !important;
+  border: none !important;
+  cursor: pointer !important;
+  padding: 0.3rem !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  color: var(--nav-text-color) !important;
+  opacity: 0.8 !important;
+  transition: opacity 0.2s ease !important;
+}
+
+.icon-button:hover {
+  opacity: 1 !important;
+}
+
+/* 暗色模式适配 */
+html.dark-mode header,
+html.dark-mode .header {
+  background-color: #1A1A1A !important;
+  border-color: #333 !important;
+}
+
+html.dark-mode .nav-item,
+html.dark-mode .site-title,
+html.dark-mode .icon-button {
+  color: #fff !important;
+}
+
+html.dark-mode .nav-item::after {
+  background-color: #fff !important;
+}

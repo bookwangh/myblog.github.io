@@ -1,0 +1,48 @@
+/* 强制删除所有可能的线条 */
+body > *:first-child,
+body > *:nth-child(2),
+body > *:nth-child(3),
+body > *:nth-child(4) {
+  border: none !important;
+  border-top: none !important;
+  border-bottom: none !important;
+  background: none !important;
+  height: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  display: none !important;
+}
+
+/* 确保header容器没有边框 */
+.header-new, .header {
+  border: none !important;
+  border-top: none !important;
+  border-bottom: none !important;
+}
+
+/* 只保留我们需要的两条线 */
+.header-new > div:nth-child(2) {
+  display: block !important;
+  width: 100% !important;
+  height: 1px !important;
+  background-color: #e5e5e5 !important;
+  margin-bottom: 1.5rem !important;
+  border: none !important;
+}
+
+html.dark-mode .header-new > div:nth-child(2) {
+  background-color: #333 !important;
+}
+
+.header-new > div:last-child {
+  display: block !important;
+  width: 100% !important;
+  height: 1px !important;
+  background-color: #e5e5e5 !important;
+  margin-top: 1rem !important;
+  border: none !important;
+}
+
+html.dark-mode .header-new > div:last-child {
+  background-color: #333 !important;
+}

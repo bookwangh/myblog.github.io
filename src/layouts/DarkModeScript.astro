@@ -1,0 +1,109 @@
+---
+---
+
+<!-- 直接在页面开始处添加暗色模式检测和切换功能 -->
+<script is:inline>
+  // 立即执行的函数
+  (function() {
+    // 检查是否已经存储暗色模式设置
+    const savedTheme = localStorage.getItem('theme');
+    
+    // 如果是暗色模式，直接添加样式
+    if (savedTheme === 'dark') {
+      // 添加类
+      document.documentElement.classList.add('dark-mode');
+      
+      // 直接设置样式
+      applyDarkStyles();
+    }
+    
+    // 应用暗色模式样式的函数
+    function applyDarkStyles() {
+      // 直接设置样式
+      document.documentElement.style.backgroundColor = '#1A1A1A';
+      document.documentElement.style.color = '#FFFFFF';
+    }
+    
+    // 移除暗色模式样式的函数
+    function removeDarkStyles() {
+      document.documentElement.style.backgroundColor = '';
+      document.documentElement.style.color = '';
+    }
+    
+    // 定义全局切换函数
+    window.toggleDarkMode = function() {
+      const html = document.documentElement;
+      const isDark = html.classList.contains('dark-mode');
+      
+      if (isDark) {
+        // 切换到亮色模式
+        html.classList.remove('dark-mode');
+        removeDarkStyles();
+        localStorage.setItem('theme', 'light');
+        
+        // 强制刷新样式
+        setTimeout(function() {
+          document.body.style.backgroundColor = '#FFFFFF';
+          document.querySelectorAll('.post-card, .video-card').forEach(function(card) {
+            card.style.backgroundColor = '#FFFFFF';
+            card.style.color = '#000000';
+          });
+        }, 0);
+      } else {
+        // 切换到暗色模式
+        html.classList.add('dark-mode');
+        applyDarkStyles();
+        localStorage.setItem('theme', 'dark');
+        
+        // 强制刷新样式
+        setTimeout(function() {
+          document.body.style.backgroundColor = '#1A1A1A';
+          document.querySelectorAll('.post-card, .video-card').forEach(function(card) {
+            card.style.backgroundColor = '#222222';
+            card.style.color = '#FFFFFF';
+          });
+        }, 0);
+      }
+      
+      // 触发自定义事件
+      const event = new Event('themeChanged');
+      document.dispatchEvent(event);
+    };
+  })();
+</script>
+
+<!-- 添加内联样式 -->
+<style is:inline>
+  html.dark-mode {
+    background-color: #1A1A1A !important;
+    color: #FFFFFF !important;
+  }
+  
+  html.dark-mode body {
+    background-color: #1A1A1A !important;
+    color: #FFFFFF !important;
+  }
+  
+  html.dark-mode .header {
+    background-color: #1A1A1A !important;
+    border-bottom-color: #333333 !important;
+  }
+  
+  html.dark-mode .post-card,
+  html.dark-mode .video-card {
+    background-color: #222222 !important;
+    color: #FFFFFF !important;
+  }
+  
+  html.dark-mode .site-title,
+  html.dark-mode .nav-item,
+  html.dark-mode .post-title,
+  html.dark-mode h1, html.dark-mode h2, html.dark-mode h3 {
+    color: #FFFFFF !important;
+  }
+  
+  html.dark-mode .post-date,
+  html.dark-mode .post-excerpt {
+    color: #AAAAAA !important;
+  }
+</style>

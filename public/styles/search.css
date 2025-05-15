@@ -1,0 +1,110 @@
+/* 搜索框样式 - 仅替换导航栏 */
+.search-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: auto;
+  background-color: #fff;
+  z-index: 1000;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.2s ease, visibility 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  border-bottom: 1px solid #eee;
+}
+
+.search-overlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.search-container {
+  width: 100%;
+  max-width: 800px;
+  position: relative;
+  padding: 0;
+  margin: 0;
+  background-color: transparent;
+}
+
+.search-form {
+  display: flex;
+  position: relative;
+  align-items: center;
+  width: 100%;
+  height: 60px; /* 与导航栏高度保持一致 */
+  border: 1px solid #eee;
+  border-radius: 4px;
+  background-color: #fff;
+}
+
+.search-input {
+  width: 100%;
+  padding: 15px 40px 15px 15px;
+  border: none;
+  font-size: 14px;
+  background-color: transparent;
+  color: #333;
+  box-shadow: none;
+  height: 40px;
+}
+
+.search-input::placeholder {
+  color: #999;
+  font-size: 14px;
+}
+
+.search-input:focus {
+  outline: none;
+}
+
+.search-submit-btn {
+  display: none; /* 隐藏提交按钮 */
+}
+
+.search-close-btn {
+  position: absolute;
+  right: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  color: #999;
+  font-size: 1rem;
+  cursor: pointer;
+  padding: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0.7;
+}
+
+/* 暗色模式适配 */
+html.dark-mode .search-overlay {
+  background-color: rgba(26, 26, 26, 0.98);
+}
+
+html.dark-mode .search-container {
+  background-color: #222;
+  border-color: #333;
+}
+
+html.dark-mode .search-input {
+  color: #fff;
+}
+
+html.dark-mode .search-input::placeholder {
+  color: #777;
+}
+
+html.dark-mode .search-close-btn {
+  color: #777;
+}
+
+html.dark-mode .search-submit-btn {
+  color: #fff;
+}
