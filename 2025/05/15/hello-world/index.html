@@ -28,13 +28,17 @@
       <nav class="main-navigation">
         <ul class="nav-menu">
           
-            <li><a href="/">文章</a></li>
+            
+            <li class=""><a href="/">文章</a></li>
           
-            <li><a href="/archives">归档</a></li>
+            
+            <li class=""><a href="/archives">归档</a></li>
           
-            <li><a href="/about">我</a></li>
+            
+            <li class=""><a href="/about">我</a></li>
           
-            <li><a href="/search">搜索</a></li>
+            
+            <li class=""><a href="/search">搜索</a></li>
           
         </ul>
       </nav>
@@ -112,5 +116,25 @@
   </footer>
   
   
+  
+  <!-- 滚动时导航栏变小的脚本 -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const header = document.querySelector('.site-header');
+      const scrollThreshold = 50;
+      
+      function handleScroll() {
+        if (window.scrollY > scrollThreshold) {
+          header.classList.add('scrolled');
+        } else {
+          header.classList.remove('scrolled');
+        }
+      }
+      
+      window.addEventListener('scroll', handleScroll);
+      // 初始检查
+      handleScroll();
+    });
+  </script>
 </body>
 </html>
