@@ -68,20 +68,24 @@
 .post-layout {
   display: flex;
   flex-direction: row;
-  gap: 20px;
+  gap: 15px;
   align-items: stretch; /* 确保子元素高度一致 */
+  position: relative;
+  height: 200px; /* 固定整体高度 */
 }
 
 /* 文章配图区域样式 */
 .post-image {
-  flex: 0 0 300px;
+  flex: 0 0 200px; /* 减小图片区域宽度 */
   height: 200px; /* 固定高度 */
   display: flex; /* 使用flex布局 */
   align-items: center; /* 垂直居中 */
+  justify-content: center; /* 水平居中 */
   overflow: hidden;
   border-radius: 8px;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
   transition: all 0.3s ease;
+  margin-right: 5px; /* 添加右侧间距 */
 }
 
 .post-image:hover {
@@ -104,16 +108,18 @@
   flex: 1;
   display: flex;
   flex-direction: column;
-  justify-content: space-between; /* 内容均匀分布 */
+  justify-content: flex-start; /* 内容从顶部开始对齐 */
   height: 200px; /* 与图片高度一致 */
-  padding: 10px 0; /* 上下填充 */
+  padding: 5px 0; /* 减少上下填充 */
   box-sizing: border-box;
+  overflow: hidden; /* 防止内容溢出 */
+  position: relative; /* 添加相对定位以便于定位“阅读全文”链接 */
 }
 
 .post-item-title {
-  font-size: 24px;
+  font-size: 20px;
   margin-top: 0;
-  margin-bottom: 12px;
+  margin-bottom: 8px;
   line-height: 1.3;
   font-weight: 600;
 }
@@ -164,23 +170,36 @@
 
 .post-item-excerpt {
   color: #555;
-  line-height: 1.7;
+  line-height: 1.6;
   display: -webkit-box;
-  -webkit-line-clamp: 3;
+  -webkit-line-clamp: 3; /* 减少为3行，留出更多空间 */
   line-clamp: 3;
   -webkit-box-orient: vertical;
   overflow: hidden;
-  height: 5.1em; /* 3行文字的高度 */
-  font-size: 15px;
-  margin-bottom: 5px;
+  max-height: 4.8em; /* 3行文字的高度 */
+  font-size: 14px; /* 缩小字体 */
+  margin-bottom: 10px; /* 适当的底部间距 */
+  padding-right: 5px; /* 添加右侧内边距 */
 }
 
 .read-more {
   display: inline-block;
-  margin-top: 10px;
   color: #007bff;
   text-decoration: none;
-  font-weight: bold;
+  font-weight: normal;
+  font-size: 12px; /* 小字体 */
+  position: absolute; /* 绝对定位 */
+  bottom: 5px; /* 距离底部5px */
+  right: 0; /* 靠右对齐 */
+  background-color: rgba(255, 255, 255, 0.8); /* 半透明背景 */
+  padding: 2px 5px; /* 内边距 */
+  border-radius: 3px; /* 圆角 */
+  opacity: 0.8; /* 半透明 */
+  transition: opacity 0.2s ease; /* 平滑过渡效果 */
+}
+
+.read-more:hover {
+  opacity: 1; /* 悬停时完全不透明 */
 }
 
 /* 相关文章区域样式 */
@@ -217,16 +236,36 @@
 @media (max-width: 768px) {
   .post-layout {
     flex-direction: column;
+    height: auto;
   }
   
   .post-image {
     flex: 0 0 auto;
-    height: 200px;
-    margin-bottom: 18px;
+    height: 180px;
+    margin-bottom: 15px;
+    width: 100%;
+  }
+  
+  .post-content {
+    height: auto;
+    min-height: 180px;
+    padding-bottom: 25px; /* 为“阅读全文”链接留出空间 */
   }
   
   .post-item-title {
-    font-size: 22px;
+    font-size: 18px;
+  }
+  
+  .post-item-excerpt {
+    -webkit-line-clamp: 3;
+    line-clamp: 3;
+    max-height: 4.8em;
+  }
+  
+  .read-more {
+    position: absolute;
+    bottom: 5px;
+    right: 0;
   }
   
   .site-header {
