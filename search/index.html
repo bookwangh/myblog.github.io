@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>搜索</title>
+  <link rel="stylesheet" href="/css/theme.css">
+  <link rel="stylesheet" href="/css/custom.css">
+  
+    <link rel="shortcut icon" href="/favicon.png" type="image/x-icon">
+  
+  
+  
+    <meta name="description" content="一个关于阅读和写作的个人博客">
+  
+  
+    <meta name="keywords" content="阅读, 写作, 思考, 学习">
+  
+  
+    <meta name="author" content="博主">
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+<body>
+  <header class="site-header">
+    <div class="container">
+      <div class="site-branding">
+        <h1 class="site-title">
+          <a href="/">读书写字</a>
+        </h1>
+      </div>
+      <nav class="main-navigation">
+        <ul class="nav-menu">
+          
+            <li><a href="/">文章</a></li>
+          
+            <li><a href="/archives">归档</a></li>
+          
+            <li><a href="/about">我</a></li>
+          
+            <li><a href="/search">搜索</a></li>
+          
+        </ul>
+      </nav>
+    </div>
+  </header>
+  
+  <div class="site-content">
+    <div class="container">
+      <main class="main-content">
+        <div class="search-container">
+  <div class="search-form">
+    <input type="text" id="search-input" placeholder="输入关键词搜索..." />
+    <button id="search-button">搜索</button>
+  </div>
+  
+  <div id="search-results" class="search-results">
+    <p>请输入搜索关键词</p>
+  </div>
+</div>
+
+<style>
+  .search-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  .search-form {
+    display: flex;
+    margin-bottom: 30px;
+  }
+  #search-input {
+    flex: 1;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ddd;
+    border-radius: 4px 0 0 4px;
+  }
+  #search-button {
+    padding: 10px 20px;
+    background-color: #333;
+    color: white;
+    border: none;
+    border-radius: 0 4px 4px 0;
+    cursor: pointer;
+  }
+  #search-button:hover {
+    background-color: #555;
+  }
+  .search-results {
+    margin-top: 20px;
+  }
+  .search-result-item {
+    margin-bottom: 30px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #eee;
+  }
+  .result-title {
+    margin-bottom: 10px;
+  }
+  .result-title a {
+    color: #333;
+    text-decoration: none;
+  }
+  .result-title a:hover {
+    text-decoration: underline;
+  }
+  .result-date {
+    color: #888;
+    font-size: 14px;
+    margin-bottom: 10px;
+  }
+  .result-excerpt {
+    line-height: 1.6;
+  }
+  .highlight {
+    background-color: yellow;
+    padding: 2px;
+  }
+  .search-summary {
+    margin-bottom: 20px;
+    padding: 10px;
+    background-color: #f9f9f9;
+    border-radius: 4px;
+  }
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  // 获取搜索元素
+  const searchInput = document.getElementById('search-input');
+  const searchButton = document.getElementById('search-button');
+  const searchResults = document.getElementById('search-results');
+  
+  if (!searchInput || !searchButton || !searchResults) {
+    console.error('搜索元素未找到');
+    return;
+  }
+  
+  // 获取搜索数据
+  async function fetchSearchData() {
+    try {
+      console.log('开始获取搜索数据...');
+      const response = await fetch('/search-data.json');
+      console.log('搜索数据响应状态:', response.status);
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      const data = await response.json();
+      console.log('成功获取搜索数据:', data);
+      return data;
+    } catch (error) {
+      console.error('获取搜索数据失败:', error);
+      searchResults.innerHTML = '<p>搜索功能暂时不可用</p>';
+      return [];
+    }
+  }
+  
+  // 执行搜索
+  async function performSearch() {
+    const query = searchInput.value.trim().toLowerCase();
+    if (!query) {
+      searchResults.innerHTML = '<p>请输入搜索关键词</p>';
+      return;
+    }
+    
+    searchResults.innerHTML = '<p>搜索中...</p>';
+    
+    try {
+      const posts = await fetchSearchData();
+      console.log('搜索数据:', posts);
+      
+      const results = posts.filter(post => {
+        return post.title.toLowerCase().includes(query) || 
+               post.content.toLowerCase().includes(query);
+      });
+      
+      displayResults(results, query);
+    } catch (error) {
+      console.error('搜索失败:', error);
+      searchResults.innerHTML = '<p>搜索过程中发生错误</p>';
+    }
+  }
+  
+  // 显示搜索结果
+  function displayResults(results, query) {
+    if (results.length === 0) {
+      searchResults.innerHTML = '<p>没有找到匹配的结果</p>';
+      return;
+    }
+    
+    let html = `<div class="search-summary"><p>找到 ${results.length} 个结果</p></div>`;
+    
+    results.forEach(post => {
+      // 处理URL，移除可能的协议和域名前缀
+      let url = post.url;
+      // 如果URL包含协议和域名，只保留路径部分
+      if (url.includes('://')) {
+        const urlObj = new URL(url);
+        url = urlObj.pathname;
+      }
+      // 确保URL以/开头
+      if (!url.startsWith('/')) {
+        url = '/' + url;
+      }
+      
+      html += `
+        <div class="search-result-item">
+          <h2 class="result-title"><a href="${url}">${post.title}</a></h2>
+          <div class="result-date">${post.date}</div>
+          <div class="result-excerpt">${getExcerpt(post.content, query)}</div>
+        </div>
+      `;
+    });
+    
+    searchResults.innerHTML = html;
+  }
+  
+  // 获取摘要，突出显示关键词
+  function getExcerpt(content, query) {
+    const plainText = content.replace(/<[^>]+>/g, '');
+    const queryIndex = plainText.toLowerCase().indexOf(query.toLowerCase());
+    
+    if (queryIndex === -1) return plainText.substring(0, 150) + '...';
+    
+    const startIndex = Math.max(0, queryIndex - 50);
+    const endIndex = Math.min(plainText.length, queryIndex + query.length + 50);
+    let excerpt = plainText.substring(startIndex, endIndex);
+    
+    if (startIndex > 0) excerpt = '...' + excerpt;
+    if (endIndex < plainText.length) excerpt = excerpt + '...';
+    
+    // 高亮关键词
+    const regex = new RegExp(query, 'gi');
+    excerpt = excerpt.replace(regex, match => `<span class="highlight">${match}</span>`);
+    
+    return excerpt;
+  }
+  
+  // 事件监听
+  searchButton.addEventListener('click', performSearch);
+  searchInput.addEventListener('keypress', function(e) {
+    if (e.key === 'Enter') {
+      performSearch();
+    }
+  });
+  
+  // 如果URL中有查询参数，自动执行搜索
+  const urlParams = new URLSearchParams(window.location.search);
+  const queryParam = urlParams.get('q');
+  if (queryParam) {
+    searchInput.value = queryParam;
+    performSearch();
+  }
+});
+</script>
+
+      </main>
+    </div>
+  </div>
+  
+  <footer class="site-footer">
+    <div class="container">
+      <div class="copyright">
+        <p>&copy; 2025 <a target="_blank" rel="noopener" href="https://bookwangh.github.io/myblog.github.io/">读书写字</a></p>
+      </div>
+    </div>
+  </footer>
+  
+  
+</body>
+</html>
