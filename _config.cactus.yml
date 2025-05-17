@@ -1,0 +1,160 @@
+##############################################################################
+# 内容设置
+##############################################################################
+
+# 导航菜单
+nav:
+  主页: /
+  归档: /archives/
+  RSS: /atom.xml
+
+# 默认文章标题
+default_post_title: 无标题
+
+# 默认首页标题
+# 如果此处为空，则使用站点标题
+default_index_title: 读书写字
+
+# 首页显示的文章数量
+posts_per_page: 10
+
+# 归档页面显示的文章数量
+archive_post_per_page: 20
+
+# 标签页面显示的标签数量
+tags_per_page: 40
+
+# 导航栏链接
+projects_url: http://github.com/bookwangh
+
+# 显示文章更新日期
+show_updated: false
+
+# 自动生成摘要
+auto_excerpt:
+  enable: true
+  length: 150
+
+# 代码高亮主题 (light/dark)
+highlight: dark
+
+# 主题颜色方案 (dark/light/classic/white)
+colorscheme: dark
+
+# 最大宽度
+max_width: 1400px
+
+# 显示文章目录
+tocbot:
+  enable: true
+  # 最小标题级别
+  min_level: 2
+  # 最大标题级别
+  max_level: 5
+  # 是否展开所有标题
+  collapsed: false
+  # 是否平滑滚动
+  smooth_scroll: true
+
+# RSS 订阅
+rss: atom.xml
+
+##############################################################################
+# 侧边栏设置
+##############################################################################
+
+# 社交链接
+social_links:
+  github: https://github.com/bookwangh
+  mail: mailto:your-email@example.com
+
+# 版权信息
+copyright:
+  enable: true
+  start_year: 2025
+  end_year: 
+  author: 读书写字
+
+# 外观设置
+##############################################################################
+
+# 头像
+gravatar:
+  email: 
+
+# 头像/Logo
+logo:
+  enabled: false
+  width: 50
+  height: 50
+  url: /images/default-thumbnail.jpg
+  gravatar: false
+
+# 网站图标
+favicon:
+  desktop:
+    url: /images/favicon.ico
+    gravatar: false
+  android:
+    url: /images/favicon-192x192.png
+    gravatar: false
+  apple:
+    url: /images/apple-touch-icon.png
+    gravatar: false
+
+# 字体设置
+font:
+  enable: true
+  family: '"Noto Serif SC", "Source Han Serif SC", "Source Han Serif CN", "Source Han Serif TC", "Source Han Serif TW", "Source Han Serif", "Songti SC", SimSun, "Songti TC", "Microsoft YaHei", sans-serif'
+  size: 16px
+
+# 代码字体设置
+code_font:
+  enable: true
+  family: '"Source Code Pro", Consolas, Monaco, Menlo, "Noto Mono", "Courier New", monospace, "Microsoft YaHei", sans-serif'
+  size: 14px
+
+# 代码高亮设置
+code_highlight:
+  enable: true
+  style: github
+  languages:
+    - python
+    - javascript
+    - bash
+    - yaml
+    - json
+    - html
+    - css
+
+# 搜索设置
+search:
+  enable: true
+  path: search.xml
+  field: post
+
+# 评论系统
+disqus:
+  enable: false
+  shortname: 
+  count: false
+
+# Google Analytics
+google_analytics:
+  enabled: false
+  id: 
+
+# 百度统计
+baidu_analytics:
+  enabled: false
+  id: 
+
+# 不蒜子统计
+busuanzi:
+  enabled: false
+
+# 图片放大
+fancybox: true
+
+# 回到顶部按钮
+totop: true

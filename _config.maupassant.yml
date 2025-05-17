@@ -1,0 +1,71 @@
+## 菜单
+menu:
+  - page: 主页
+    directory: /
+    icon: fa-home
+  - page: 归档
+    directory: /archives/
+    icon: fa-archive
+  - page: RSS
+    directory: /atom.xml
+    icon: fa-rss
+
+## 小工具
+widgets:
+  - search
+  - category
+  - tag
+  - archive
+  - recent_posts
+
+## 网站图标和侧边栏头像
+favicon: /images/favicon.ico
+avatar: /images/default-thumbnail.jpg
+
+## 摘要
+excerpt_link: 阅读全文
+
+## 主题颜色
+color_scheme: dark
+
+## 代码高亮
+highlight:
+  enable: true
+  line_number: false
+  auto_detect: false
+  tab_replace: ''
+
+## 版权信息
+copyright:
+  enable: true
+  license: '本文采用<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可 © 2025 读书写字'
+
+## 社交链接
+social:
+  github: https://github.com/bookwangh
+  email: mailto:your-email@example.com
+
+## 评论系统
+disqus:
+  enable: false
+uyan: 
+changyan: 
+livere: 
+gitment:
+  enable: false
+gitalk:
+  enable: false
+valine:
+  enable: false
+
+## 搜索设置
+search:
+  path: search.xml
+  field: post
+
+## 杂项设置
+fancybox: true
+show_category_count: true
+toc_number: true
+shareto: true
+wordcount: true

@@ -7,7 +7,7 @@ menu:
   我: /about
   搜索: /search
 
-favicon: /favicon.png
+# favicon: /favicon.png  # 注释掉favicon设置，移除浏览器标签上的图标
 # logo: /new-logo.jpeg  # 注释掉logo设置，只显示网站标题
 
 # Comment

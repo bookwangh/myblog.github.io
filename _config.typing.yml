@@ -1,0 +1,96 @@
+# 导航菜单
+menu:
+  主页: /
+  归档: /archives/
+  RSS: /atom.xml
+
+# 主题颜色
+color_scheme: dark
+
+# 是否显示文章目录
+toc: true
+
+# 是否显示阅读时间
+reading_time: true
+
+# 是否显示文章更新日期
+show_updated: false
+
+# 社交链接
+social:
+  github: https://github.com/bookwangh
+  email: mailto:your-email@example.com
+
+# 版权信息
+copyright:
+  enable: true
+  license: '本文采用<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可 © 2025 读书写字'
+
+# 网站图标
+favicon: /images/favicon.ico
+
+# 网站 Logo
+logo: /images/default-thumbnail.jpg
+
+# 默认文章封面图
+default_cover: /images/default-thumbnail.jpg
+
+# 是否启用黑暗模式
+dark_mode: true
+
+# 是否启用代码高亮
+highlight:
+  enable: true
+  line_number: false
+  auto_detect: false
+  tab_replace: ''
+
+# 是否启用搜索功能
+search:
+  enable: true
+  path: search.xml
+  field: post
+
+# 是否启用分类和标签页面
+category_generator:
+  enable: true
+tag_generator:
+  enable: true
+
+# 是否启用归档页面
+archive_generator:
+  enable: true
+  per_page: 20
+  yearly: true
+  monthly: true
+
+# 是否启用 RSS
+feed:
+  enable: true
+  type: atom
+  path: atom.xml
+  limit: 20
+  hub:
+  content:
+  content_limit: 140
+  content_limit_delim: ' '
+  order_by: -date
+
+# 是否启用评论功能
+disqus:
+  enable: false
+  shortname: 
+
+# 是否启用站点统计
+google_analytics:
+  enable: false
+  id: 
+
+# 是否启用百度统计
+baidu_analytics:
+  enable: false
+  id: 
+
+# 是否启用不蒜子统计
+busuanzi:
+  enable: false

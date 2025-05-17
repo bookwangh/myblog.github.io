@@ -48,12 +48,14 @@
                     <% 
                     let content = post.content;
                     let plainText = content.replace(/<[^>]+>/g, '');
-                    let summary = plainText.length > 200 ? plainText.substring(0, 200) + '...' : plainText;
+                    let summary = plainText.length > 200 ? plainText.substring(0, 100) + '...' : plainText;
                     %>
                     <p><%= summary %></p>
                   <% } %>
                   
-                  <a href="<%- url_for(post.path) %>" class="read-more">阅读全文 →</a>
+                  <div class="read-more-container">
+                    <a href="<%- url_for(post.path) %>" class="read-more">阅读全文 →</a>
+                  </div>
                 </div>
               </div>
             </div>

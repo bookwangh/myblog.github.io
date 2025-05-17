@@ -1,0 +1,183 @@
+# Fluid 主题配置文件
+# 详细配置文档：https://hexo.fluid-dev.com/docs/guide/
+
+# 网站全局设置
+navbar:
+  # 导航栏
+  menu:
+    - { key: "主页", link: "/" }
+    - { key: "归档", link: "/archives/" }
+  
+  # 导航栏标题
+  blog_title: "读书写字"
+
+# 首页设置
+index:
+  # 首页副标题
+  slogan:
+    enable: true
+    text: "记录阅读与写作的思考"
+  
+  # 文章摘要设置
+  auto_excerpt:
+    enable: true
+    length: 150
+  
+  # 文章封面图
+  post_meta:
+    date: true
+    category: true
+    tag: true
+  
+  # 文章排版
+  post_default_img: /images/default-thumbnail.jpg
+  banner_img: /images/default-thumbnail.jpg
+
+# 文章页设置
+post:
+  # 文章元信息
+  meta:
+    author:
+      enable: true
+    date:
+      enable: true
+      format: "YYYY-MM-DD"
+    wordcount:
+      enable: true
+      format: "{} 字"
+    min2read:
+      enable: true
+      format: "{} 分钟"
+    views:
+      enable: false
+  
+  # 文章版权信息
+  copyright:
+    enable: true
+    content: '本文采用<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可 © 2025 读书写字'
+  
+  # 文章目录
+  toc:
+    enable: true
+    headingSelector: "h1,h2,h3,h4,h5,h6"
+    collapseDepth: 0
+
+# 归档页设置
+archive:
+  banner_img: /images/default-thumbnail.jpg
+  subtitle: "文章归档"
+
+# 分类页设置
+category:
+  enable: true
+  banner_img: /images/default-thumbnail.jpg
+  subtitle: "分类"
+
+# 标签页设置
+tag:
+  enable: true
+  banner_img: /images/default-thumbnail.jpg
+  subtitle: "标签"
+
+# 关于页设置
+about:
+  enable: true
+  banner_img: /images/default-thumbnail.jpg
+  subtitle: "关于我"
+  avatar: /images/default-thumbnail.jpg
+  name: "读书写字"
+  intro: "一个关于阅读和写作的个人博客"
+
+# 友情链接页
+links:
+  enable: false
+
+# 404页面
+page404:
+  enable: true
+  banner_img: /images/default-thumbnail.jpg
+  subtitle: "页面不存在"
+
+# 搜索功能
+search:
+  enable: true
+  path: /local-search.xml
+  field: post
+  content: true
+  format: html
+
+# 代码高亮
+code:
+  copy_btn: true
+  highlight:
+    enable: true
+    line_number: true
+    lib: "highlightjs"
+    highlightjs:
+      style: "github"
+      bg_color: false
+    prismjs:
+      style: "default"
+      preprocess: true
+
+# 数学公式
+math:
+  enable: false
+  specific: false
+  engine: mathjax
+
+# 评论功能
+comments:
+  enable: false
+  type: disqus
+  disqus:
+    shortname: 
+
+# 统计功能
+web_analytics:
+  enable: false
+  type: google
+  google:
+    tracking_id: 
+  baidu:
+    tracking_id: 
+
+# 页脚设置
+footer:
+  content: '© 2025 <a href="https://test1.wanghabook1984.dpdns.org">读书写字</a>'
+  statistics:
+    enable: false
+    source: "busuanzi"
+    pv_format: "总访问量 {} 次"
+    uv_format: "总访客数 {} 人"
+
+# 主题颜色
+dark_mode:
+  enable: true
+  default: auto
+
+# 字体设置
+font:
+  font_size: 16px
+  font_family: 
+  code_font_size: 85%
+
+# RSS设置
+feed:
+  enable: false
+  type: atom
+  path: atom.xml
+  limit: 20
+  hub:
+  content:
+  content_limit: 140
+  content_limit_delim: ' '
+  order_by: -date
+
+# 自定义 CSS / JS
+custom_js: 
+custom_css: 
+custom_head: 
+
+# 网站图标
+favicon: /images/favicon.ico

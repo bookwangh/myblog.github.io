@@ -1,0 +1,22 @@
+/* 阅读全文按钮容器 */
+.read-more-container {
+  text-align: right;
+  margin-top: 5px;
+  clear: both;
+}
+
+/* 阅读全文按钮样式 - 绿色文字 */
+.read-more {
+  color: #4CAF50; /* 绿色 */
+  text-decoration: none;
+  font-weight: normal;
+  font-size: 16px; /* 增大字体 */
+  transition: color 0.3s ease;
+  display: inline-block;
+}
+
+/* 简化悬停效果 - 保持绿色 */
+.read-more:hover {
+  color: #2E8B57; /* 深绿色 */
+  text-decoration: underline;
+}

@@ -6,12 +6,8 @@
   <title><%= page.title || config.title %></title>
   <link rel="stylesheet" href="/css/theme.css">
   <link rel="stylesheet" href="/css/custom.css">
-  <% if (theme.favicon) { %>
-    <link rel="shortcut icon" href="<%= theme.favicon %>" type="image/x-icon">
-  <% } %>
-  <% if (theme.logo) { %>
-    <link rel="icon" href="<%= theme.logo %>">
-  <% } %>
+  <link rel="stylesheet" href="/css/read-more-fix.css">
+  <!-- 移除favicon和logo引用，确保浏览器标签上只显示文字 -->
   <% if (config.description) { %>
     <meta name="description" content="<%= config.description %>">
   <% } %>
@@ -33,7 +29,29 @@
       <nav class="main-navigation">
         <ul class="nav-menu">
           <% for (let label in theme.menu) { %>
-            <li><a href="<%= theme.menu[label] %>"><%= label %></a></li>
+            <% 
+              // 检查当前页面是否与菜单项匹配
+              let isActive = false;
+              const menuPath = theme.menu[label];
+              
+              // 首页判断
+              if (menuPath === '/' && (is_home() || page.path === 'index.html')) {
+                isActive = true;
+              } 
+              // 归档页判断
+              else if (menuPath === '/archives' && is_archive()) {
+                isActive = true;
+              }
+              // 关于页判断
+              else if (menuPath === '/about' && page.path === 'about/index.html') {
+                isActive = true;
+              }
+              // 搜索页判断
+              else if (menuPath === '/search' && page.path === 'search/index.html') {
+                isActive = true;
+              }
+            %>
+            <li class="<%= isActive ? 'active' : '' %>"><a href="<%= menuPath %>"><%= label %></a></li>
           <% } %>
         </ul>
       </nav>
@@ -66,5 +84,25 @@
     ga('send', 'pageview');
   </script>
   <% } %>
+  
+  <!-- 滚动时导航栏变小的脚本 -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const header = document.querySelector('.site-header');
+      const scrollThreshold = 50;
+      
+      function handleScroll() {
+        if (window.scrollY > scrollThreshold) {
+          header.classList.add('scrolled');
+        } else {
+          header.classList.remove('scrolled');
+        }
+      }
+      
+      window.addEventListener('scroll', handleScroll);
+      // 初始检查
+      handleScroll();
+    });
+  </script>
 </body>
 </html>

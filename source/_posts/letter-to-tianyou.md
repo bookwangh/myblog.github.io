@@ -1,6 +1,7 @@
 ---
 title: 亲爱的王天佑
 date: 2025-05-15 17:09:00
+index_img: https://test.wanghaobook1984.dpdns.org/picGo天天手办.png
 categories: 
   - 家庭
 tags:
@@ -10,6 +11,8 @@ tags:
 ---
 
 亲爱的王天佑，你好哇！
+
+![](https://test.wanghaobook1984.dpdns.org/picGo天天手办.png)
 
 当你打开这封信的时候，心中是不是充满了迷惑还有一点不解，可能会想"怎么回事？为什么要给我写这个东东？是不是也想学妈妈？哼！"，对啊！为什么要有这封信呢？我也在想，为什么要用这种方式？想要和你说什么呢？
 
