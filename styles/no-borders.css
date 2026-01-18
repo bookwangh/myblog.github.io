@@ -1,0 +1,29 @@
+/* 强制删除所有可能的边框 */
+body, body * {
+  border-top: none !important;
+}
+
+/* 只保留我们需要的两条线 */
+.header-new > div:nth-child(2) {
+  /* 标题下方的分隔线 */
+  border-top: 1px solid #e5e5e5 !important;
+  height: 1px !important;
+  width: 100% !important;
+  display: block !important;
+}
+
+html.dark-mode .header-new > div:nth-child(2) {
+  border-top: 1px solid #333 !important;
+}
+
+.header-new > div:last-child {
+  /* 导航栏底部的分隔线 */
+  border-top: 1px solid #e5e5e5 !important;
+  height: 1px !important;
+  width: 100% !important;
+  display: block !important;
+}
+
+html.dark-mode .header-new > div:last-child {
+  border-top: 1px solid #333 !important;
+}

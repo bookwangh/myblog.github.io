@@ -1,0 +1,109 @@
+/* 全新的导航栏样式 - 基于参考图片 */
+.header-new {
+  padding: 0.8rem 1rem !important;
+  background-color: #fff !important;
+  border-top: 1px solid #e5e5e5 !important;
+  border-bottom: 1px solid #e5e5e5 !important;
+  position: sticky !important;
+  top: 0 !important;
+  z-index: 100 !important;
+}
+
+.header-container {
+  max-width: 1200px !important;
+  margin: 0 auto !important;
+  display: flex !important;
+  flex-direction: column !important;
+}
+
+.blog-title-container {
+  text-align: center !important;
+  margin-bottom: 1.5rem !important;
+  padding-bottom: 0.8rem !important;
+}
+
+.site-title {
+  font-size: 1.5rem !important;
+  font-weight: 500 !important;
+  color: #333 !important;
+  text-decoration: none !important;
+}
+
+.header-content {
+  display: grid !important;
+  grid-template-columns: 1fr auto 1fr !important;
+  align-items: center !important;
+  padding: 0 0.5rem !important;
+}
+
+.nav {
+  display: flex !important;
+  gap: 1.5rem !important;
+  justify-content: center !important;
+}
+
+.nav-item {
+  text-decoration: none !important;
+  color: #333 !important;
+  font-weight: 400 !important;
+  padding: 0.25rem 0 !important;
+  position: relative !important;
+  font-size: 0.9rem !important;
+  letter-spacing: 0.02em !important;
+}
+
+.nav-item::after {
+  content: '' !important;
+  position: absolute !important;
+  bottom: -2px !important;
+  left: 0 !important;
+  width: 0 !important;
+  height: 1px !important;
+  background-color: #333 !important;
+  transition: width 0.2s ease !important;
+}
+
+.nav-item:hover::after,
+.nav-item.active::after {
+  width: 100% !important;
+}
+
+.header-right {
+  display: flex !important;
+  justify-content: flex-end !important;
+  align-items: center !important;
+  gap: 0.75rem !important;
+}
+
+.icon-button {
+  background: none !important;
+  border: none !important;
+  cursor: pointer !important;
+  padding: 0.3rem !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  color: #333 !important;
+  opacity: 0.8 !important;
+  transition: opacity 0.2s ease !important;
+}
+
+.icon-button:hover {
+  opacity: 1 !important;
+}
+
+/* 暗色模式适配 */
+html.dark-mode .header-new {
+  background-color: #1A1A1A !important;
+  border-color: #333 !important;
+}
+
+html.dark-mode .nav-item,
+html.dark-mode .site-title,
+html.dark-mode .icon-button {
+  color: #fff !important;
+}
+
+html.dark-mode .nav-item::after {
+  background-color: #fff !important;
+}

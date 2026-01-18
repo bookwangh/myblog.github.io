@@ -1,0 +1,130 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><!-- 暗色模式脚本 - 必须在最开始加载 --><!-- 直接在页面开始处添加暗色模式检测和切换功能 --><script>
+  // 立即执行的函数
+  (function() {
+    // 检查是否已经存储暗色模式设置
+    const savedTheme = localStorage.getItem('theme');
+    
+    // 如果是暗色模式，直接添加样式
+    if (savedTheme === 'dark') {
+      // 添加类
+      document.documentElement.classList.add('dark-mode');
+      
+      // 直接设置样式
+      applyDarkStyles();
+    }
+    
+    // 应用暗色模式样式的函数
+    function applyDarkStyles() {
+      // 直接设置样式
+      document.documentElement.style.backgroundColor = '#1A1A1A';
+      document.documentElement.style.color = '#FFFFFF';
+    }
+    
+    // 移除暗色模式样式的函数
+    function removeDarkStyles() {
+      document.documentElement.style.backgroundColor = '';
+      document.documentElement.style.color = '';
+    }
+    
+    // 定义全局切换函数
+    window.toggleDarkMode = function() {
+      const html = document.documentElement;
+      const isDark = html.classList.contains('dark-mode');
+      
+      if (isDark) {
+        // 切换到亮色模式
+        html.classList.remove('dark-mode');
+        removeDarkStyles();
+        localStorage.setItem('theme', 'light');
+        
+        // 强制刷新样式
+        setTimeout(function() {
+          document.body.style.backgroundColor = '#FFFFFF';
+          document.querySelectorAll('.post-card, .video-card').forEach(function(card) {
+            card.style.backgroundColor = '#FFFFFF';
+            card.style.color = '#000000';
+          });
+        }, 0);
+      } else {
+        // 切换到暗色模式
+        html.classList.add('dark-mode');
+        applyDarkStyles();
+        localStorage.setItem('theme', 'dark');
+        
+        // 强制刷新样式
+        setTimeout(function() {
+          document.body.style.backgroundColor = '#1A1A1A';
+          document.querySelectorAll('.post-card, .video-card').forEach(function(card) {
+            card.style.backgroundColor = '#222222';
+            card.style.color = '#FFFFFF';
+          });
+        }, 0);
+      }
+      
+      // 触发自定义事件
+      const event = new Event('themeChanged');
+      document.dispatchEvent(event);
+    };
+  })();
+</script> <!-- 添加内联样式 --><style>
+  html.dark-mode {
+    background-color: #1A1A1A !important;
+    color: #FFFFFF !important;
+  }
+  
+  html.dark-mode body {
+    background-color: #1A1A1A !important;
+    color: #FFFFFF !important;
+  }
+  
+  html.dark-mode .header {
+    background-color: #1A1A1A !important;
+    border-bottom-color: #333333 !important;
+  }
+  
+  html.dark-mode .post-card,
+  html.dark-mode .video-card {
+    background-color: #222222 !important;
+    color: #FFFFFF !important;
+  }
+  
+  html.dark-mode .site-title,
+  html.dark-mode .nav-item,
+  html.dark-mode .post-title,
+  html.dark-mode h1, html.dark-mode h2, html.dark-mode h3 {
+    color: #FFFFFF !important;
+  }
+  
+  html.dark-mode .post-date,
+  html.dark-mode .post-excerpt {
+    color: #AAAAAA !important;
+  }
+</style> <!-- Global Metadata --> <meta charset="utf-8"> <meta name="viewport" content="width=device-width,initial-scale=1"> <link rel="icon" type="image/svg+xml" href="/favicon.svg"> <!-- 主题脚本 - 在页面加载前执行 --> <script src="/js/theme.js"></script> <!-- 删除边框的脚本 --> <script src="/js/remove-borders.js"></script> <!-- 导航脚本 - 处理导航项点击事件 --> <script src="/js/navigation.js"></script> <!-- 搜索脚本 - 处理搜索功能 --> <script src="/js/search.js"></script> <!-- 直接引入CSS文件 --> <link rel="stylesheet" href="/styles/global.css"> <link rel="stylesheet" href="/styles/header-new.css"> <link rel="stylesheet" href="/styles/search.css"> <link rel="stylesheet" href="/styles/nav-fix.css"> <link rel="stylesheet" href="/styles/header-fix.css"> <link rel="stylesheet" href="/styles/important-override.css"> <link rel="stylesheet" href="/styles/final-override.css"> <link rel="stylesheet" href="/styles/new-header.css"> <link rel="stylesheet" href="/styles/override-final.css"> <link rel="stylesheet" href="/styles/border-fix.css"> <link rel="stylesheet" href="/styles/no-borders.css"> <link rel="stylesheet" href="/styles/force-remove-lines.css"> <link rel="stylesheet" href="/styles/extreme-fix.css"> <link rel="sitemap" href="/sitemap-index.xml"> <link rel="alternate" type="application/rss+xml" title="hyuanverse" href="https://wanghaobook1984.dpdns.org/rss.xml"> <meta name="generator" content="Astro v5.7.12"> <!-- Font preloads --> <link rel="preload" href="/fonts/atkinson-regular.woff" as="font" type="font/woff" crossorigin> <link rel="preload" href="/fonts/atkinson-bold.woff" as="font" type="font/woff" crossorigin> <!-- Canonical URL --> <link rel="canonical" href="https://wanghaobook1984.dpdns.org/blog/"> <!-- Primary Meta Tags --> <title>书记 | hyuanverse
+<meta name="title" content="书记 | hyuanverse">
+<meta name="description" content="探索思想与技术的交汇处 - 王浩的个人博客">
+
+<!-- Open Graph / Facebook -->
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://wanghaobook1984.dpdns.org/blog/">
+<meta property="og:title" content="书记 | hyuanverse">
+<meta property="og:description" content="探索思想与技术的交汇处 - 王浩的个人博客">
+<meta property="og:image" content="https://wanghaobook1984.dpdns.org/blog-placeholder-1.jpg">
+
+<!-- Twitter -->
+<meta property="twitter:card" content="summary_large_image">
+<meta property="twitter:url" content="https://wanghaobook1984.dpdns.org/blog/">
+<meta property="twitter:title" content="书记 | hyuanverse">
+<meta property="twitter:description" content="探索思想与技术的交汇处 - 王浩的个人博客">
+<meta property="twitter:image" content="https://wanghaobook1984.dpdns.org/blog-placeholder-1.jpg"></title><link rel="stylesheet" href="/_astro/about.BntXnVmv.css">
+<style>.main-nav[data-astro-cid-pux6a34n]{width:100%;background-color:var(--background-color);z-index:1000;position:sticky;top:0;transition:box-shadow .3s ease;border-bottom:1px solid var(--border-color)}.main-nav[data-astro-cid-pux6a34n].scrolled{box-shadow:0 2px 8px #0000000d}.nav-container[data-astro-cid-pux6a34n]{display:flex;justify-content:space-between;align-items:center;padding:.7rem 2rem;max-width:var(--max-width);margin:0 auto}.nav-right[data-astro-cid-pux6a34n]{display:flex;align-items:center;gap:1.5rem}.nav-center[data-astro-cid-pux6a34n]{display:flex;gap:2.5rem}.main-nav[data-astro-cid-pux6a34n] a[data-astro-cid-pux6a34n]{color:var(--secondary-color);font-size:.85rem;font-weight:400;padding:.5rem 0;transition:color .2s ease;letter-spacing:.3px;text-decoration:none}.main-nav[data-astro-cid-pux6a34n] a[data-astro-cid-pux6a34n]:hover,.main-nav[data-astro-cid-pux6a34n] a[data-astro-cid-pux6a34n].active{color:var(--primary-color)}.nav-right[data-astro-cid-pux6a34n] a[data-astro-cid-pux6a34n]{display:flex;align-items:center;justify-content:center}.theme-toggle-container[data-astro-cid-pux6a34n]{display:flex;align-items:center}.theme-toggle[data-astro-cid-pux6a34n]{position:relative;display:inline-block;cursor:pointer}.theme-toggle-input[data-astro-cid-pux6a34n]{opacity:0;width:0;height:0}.theme-toggle-track[data-astro-cid-pux6a34n]{width:36px;height:20px;background-color:#eaeaea;border-radius:10px;position:relative;transition:background-color .3s ease}.theme-toggle-thumb[data-astro-cid-pux6a34n]{position:absolute;top:2px;left:2px;width:16px;height:16px;background-color:#fff;border-radius:50%;transition:transform .3s ease;box-shadow:0 1px 3px #0000001a}.theme-toggle-input[data-astro-cid-pux6a34n]:checked+.theme-toggle-track[data-astro-cid-pux6a34n]{background-color:#666}.theme-toggle-input[data-astro-cid-pux6a34n]:checked+.theme-toggle-track[data-astro-cid-pux6a34n] .theme-toggle-thumb[data-astro-cid-pux6a34n]{transform:translate(16px)}
+</style></head> <body> <!-- Heptabase风格的导航栏 --><header class="header-new" style="padding: 0.8rem 1rem 0; background-color: #fff; border: none !important; border-top: none !important; border-bottom: none !important; position: sticky; top: 0; z-index: 100;" data-astro-cid-3ef6ksr2> <div class="header-container" style="max-width: 1200px; margin: 0 auto; display: flex; flex-direction: column;" data-astro-cid-3ef6ksr2> <!-- 博客标题独立放置在上方 --> <div class="blog-title-container" style="text-align: center; margin-bottom: 0; padding-bottom: 0.8rem;" data-astro-cid-3ef6ksr2> <a href="/" class="site-title" style="font-size: 1.5rem; font-weight: 500; color: #333; text-decoration: none;" data-astro-cid-3ef6ksr2>读书写字</a> </div> </div> <!-- 标题下方的分隔线，与页面等宽 --> <div style="width: 100%; height: 1px; background-color: #e5e5e5; margin-bottom: 1.5rem;" data-astro-cid-3ef6ksr2></div> <div class="header-container" style="max-width: 1200px; margin: 0 auto; display: flex; flex-direction: column;" data-astro-cid-3ef6ksr2> <div class="header-content" style="display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; padding: 0 0.5rem;" data-astro-cid-3ef6ksr2> <div class="header-left" data-astro-cid-3ef6ksr2> <!-- 空的左侧区域，保持布局平衡 --> </div> <!-- 将导航项放在中间区域 --> <nav class="nav" style="display: flex; gap: 1.5rem; justify-content: center;" data-astro-cid-3ef6ksr2> <a href="#articles" class="nav-item" id="nav-articles" style="text-decoration: none; color: #333; font-weight: 400; padding: 0.25rem 0; position: relative; font-size: 0.9rem; letter-spacing: 0.02em;" data-astro-cid-3ef6ksr2>文章</a> <a href="#videos" class="nav-item" id="nav-videos" style="text-decoration: none; color: #333; font-weight: 400; padding: 0.25rem 0; position: relative; font-size: 0.9rem; letter-spacing: 0.02em;" data-astro-cid-3ef6ksr2>视频</a> <a href="#about" class="nav-item" id="nav-about" style="text-decoration: none; color: #333; font-weight: 400; padding: 0.25rem 0; position: relative; font-size: 0.9rem; letter-spacing: 0.02em;" data-astro-cid-3ef6ksr2>我</a> </nav> <div class="header-right" style="display: flex; justify-content: flex-end; align-items: center; gap: 0.75rem;" data-astro-cid-3ef6ksr2> <!-- 搜索按钮 --> <button class="icon-button search-toggle" aria-label="搜索" id="searchToggle" style="background: none; border: none; cursor: pointer; padding: 0.3rem; display: flex; align-items: center; justify-content: center; color: #333; opacity: 0.8; transition: opacity 0.2s ease;" data-astro-cid-3ef6ksr2> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-astro-cid-3ef6ksr2> <circle cx="11" cy="11" r="8" data-astro-cid-3ef6ksr2></circle> <line x1="21" y1="21" x2="16.65" y2="16.65" data-astro-cid-3ef6ksr2></line> </svg> </button> <!-- 暗色模式切换 --> <button class="icon-button theme-toggle" aria-label="切换暗色模式" onclick="toggleTheme()" style="background: none; border: none; cursor: pointer; padding: 0.3rem; display: flex; align-items: center; justify-content: center; color: #333; opacity: 0.8; transition: opacity 0.2s ease;" data-astro-cid-3ef6ksr2> <svg class="sun-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-astro-cid-3ef6ksr2> <circle cx="12" cy="12" r="5" data-astro-cid-3ef6ksr2></circle> <line x1="12" y1="1" x2="12" y2="3" data-astro-cid-3ef6ksr2></line> <line x1="12" y1="21" x2="12" y2="23" data-astro-cid-3ef6ksr2></line> <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" data-astro-cid-3ef6ksr2></line> <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" data-astro-cid-3ef6ksr2></line> <line x1="1" y1="12" x2="3" y2="12" data-astro-cid-3ef6ksr2></line> <line x1="21" y1="12" x2="23" y2="12" data-astro-cid-3ef6ksr2></line> <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" data-astro-cid-3ef6ksr2></line> <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" data-astro-cid-3ef6ksr2></line> </svg> <svg class="moon-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-astro-cid-3ef6ksr2> <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" data-astro-cid-3ef6ksr2></path> </svg> </button> </div> </div> </div> <!-- 导航栏底部的分隔线，与页面等宽 --> <div style="width: 100%; height: 1px; background-color: #e5e5e5; margin-top: 1rem;" data-astro-cid-3ef6ksr2></div> </header>  <script type="module">document.addEventListener("DOMContentLoaded",()=>{const c=document.getElementById("nav-articles"),i=document.getElementById("nav-videos"),n=document.getElementById("nav-about");c.classList.add("active"),c.addEventListener("click",e=>{e.preventDefault(),s(c),document.getElementById("articles-tab").click()}),i.addEventListener("click",e=>{e.preventDefault(),s(i),document.getElementById("videos-tab").click()}),n.addEventListener("click",e=>{e.preventDefault(),s(n),document.getElementById("about-tab").click()});function s(e){c.classList.remove("active"),i.classList.remove("active"),n.classList.remove("active"),e.classList.add("active")}const t=document.querySelector(".hamburger-menu");t&&t.addEventListener("click",()=>{const e=document.querySelector(".mobile-nav");if(e)e.classList.toggle("active"),t.classList.toggle("active");else{const a=document.createElement("div");a.className="mobile-nav active",a.innerHTML=`
+						<a href="#articles" class="mobile-nav-item">文章</a>
+						<a href="#videos" class="mobile-nav-item">视频</a>
+						<a href="#about" class="mobile-nav-item">我</a>
+					`,document.body.appendChild(a),t.classList.add("active"),a.querySelectorAll(".mobile-nav-item").forEach((o,l)=>{o.addEventListener("click",v=>{v.preventDefault(),a.classList.remove("active"),t.classList.remove("active"),l===0?document.getElementById("nav-articles").click():l===1?document.getElementById("nav-videos").click():l===2&&document.getElementById("nav-about").click()})})}})});</script>  <!-- 暗色模式检查已移至全局theme.js脚本 --> <script type="module">document.addEventListener("DOMContentLoaded",()=>{const c=document.getElementById("nav-articles"),n=document.getElementById("nav-videos"),a=document.getElementById("nav-about");c.classList.add("active"),c.addEventListener("click",t=>{t.preventDefault(),s(c);const e=document.getElementById("articles-tab");e&&e.click()}),n.addEventListener("click",t=>{t.preventDefault(),s(n);const e=document.getElementById("videos-tab");e&&e.click()}),a.addEventListener("click",t=>{t.preventDefault(),s(a);const e=document.getElementById("about-tab");e&&e.click()});function s(t){c.classList.remove("active"),n.classList.remove("active"),a.classList.remove("active"),t.classList.add("active")}});</script> <main> <section class="hero blog-hero"> <div class="container"> <div class="hero-content"> <h1>hyuanverse</h1> <p class="subtitle">探索思想与技术的交汇处</p> </div> </div> </section> <nav class="main-nav" id="main-nav" data-astro-cid-pux6a34n> <div class="nav-container" data-astro-cid-pux6a34n> <div class="nav-center" data-astro-cid-pux6a34n> <div class="nav-item" data-astro-cid-pux6a34n> <a href="/" class="nav-link" data-astro-cid-pux6a34n>1%</a> </div> <div class="nav-item" data-astro-cid-pux6a34n> <a href="/heptabase" class="nav-link" data-astro-cid-pux6a34n>HEPTABASE</a> </div> <div class="nav-item" data-astro-cid-pux6a34n> <a href="/blog" class="nav-link" data-astro-cid-pux6a34n>书记</a> </div> <div class="nav-item" data-astro-cid-pux6a34n> <a href="/notes" class="nav-link" data-astro-cid-pux6a34n>笔记</a> </div> <div class="nav-item" data-astro-cid-pux6a34n> <a href="/thinking" class="nav-link" data-astro-cid-pux6a34n>足迹</a> </div> <div class="nav-item" data-astro-cid-pux6a34n> <a href="/me" class="nav-link" data-astro-cid-pux6a34n>我</a> </div> </div> <div class="nav-right" data-astro-cid-pux6a34n> <a href="https://twitter.com" target="_blank" class="social-icon" aria-label="Twitter" data-astro-cid-pux6a34n> <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" data-astro-cid-pux6a34n> <path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z" data-astro-cid-pux6a34n></path> </svg> </a> <a href="/search" class="social-icon" aria-label="搜索" data-astro-cid-pux6a34n> <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" data-astro-cid-pux6a34n> <circle cx="11" cy="11" r="8" data-astro-cid-pux6a34n></circle> <line x1="21" y1="21" x2="16.65" y2="16.65" data-astro-cid-pux6a34n></line> </svg> </a> <div class="theme-toggle-container" data-astro-cid-pux6a34n> <label class="theme-toggle" for="theme-toggle-checkbox" data-astro-cid-pux6a34n> <input type="checkbox" id="theme-toggle-checkbox" class="theme-toggle-input" data-astro-cid-pux6a34n> <div class="theme-toggle-track" data-astro-cid-pux6a34n> <div class="theme-toggle-thumb" data-astro-cid-pux6a34n></div> </div> </label> </div> </div> </div> </nav> <script type="module">document.addEventListener("DOMContentLoaded",function(){const e=document.getElementById("main-nav");if(!e)return;n(),window.addEventListener("scroll",n);function n(){window.scrollY>10?e.classList.add("scrolled"):e.classList.remove("scrolled")}});</script>  <div class="main-content"> <div class="content-area"> <div class="post-list"> <div class="post-card"> <a href="/blog/undefined/"> <img src="/placeholder-hero.jpg" alt=""> <h3>读书心得：《原子习惯》</h3> <p class="date">2025/05/14</p> <p class="excerpt">关于如何通过微小的改变实现巨大成果的读书笔记</p> </a> </div><div class="post-card"> <a href="/blog/undefined/"> <img src="/blog-placeholder-1.jpg" alt=""> <h3>Markdown Style Guide</h3> <p class="date">2024/06/19</p> <p class="excerpt">Here is a sample of some basic Markdown syntax that can be used when writing Markdown content in Astro.</p> </a> </div><div class="post-card"> <a href="/blog/undefined/"> <img src="/blog-placeholder-5.jpg" alt=""> <h3>Using MDX</h3> <p class="date">2024/06/01</p> <p class="excerpt">Lorem ipsum dolor sit amet</p> </a> </div><div class="post-card"> <a href="/blog/undefined/"> <img src="/blog-placeholder-2.jpg" alt=""> <h3>Third post</h3> <p class="date">2022/07/22</p> <p class="excerpt">Lorem ipsum dolor sit amet</p> </a> </div><div class="post-card"> <a href="/blog/undefined/"> <img src="/blog-placeholder-4.jpg" alt=""> <h3>Second post</h3> <p class="date">2022/07/15</p> <p class="excerpt">Lorem ipsum dolor sit amet</p> </a> </div><div class="post-card"> <a href="/blog/undefined/"> <img src="/blog-placeholder-3.jpg" alt=""> <h3>First post</h3> <p class="date">2022/07/08</p> <p class="excerpt">Lorem ipsum dolor sit amet</p> </a> </div> </div> </div> <aside class="sidebar"> <div class="sidebar-section"> <h3 class="sidebar-title">1% 就好</h3> <div class="sidebar-content"> <p>我是王浩，这里是我的思考与探索。希望对你有所启发</p> <div class="subscribe-form"> <input type="email" placeholder="Type your email..."> <button>Subscribe</button> </div> </div> </div> <div class="sidebar-section"> <h3 class="sidebar-title">最近文章</h3> <div class="sidebar-content"> <div class="recent-posts"> <a href="/blog/undefined/" class="recent-post-item"> <img src="/placeholder-hero.jpg" alt=""> <div class="recent-post-content"> <h4 class="recent-post-title">读书心得：《原子习惯》</h4> <p class="recent-post-date">2025/05/14</p> </div> </a><a href="/blog/undefined/" class="recent-post-item"> <img src="/blog-placeholder-1.jpg" alt=""> <div class="recent-post-content"> <h4 class="recent-post-title">Markdown Style Guide</h4> <p class="recent-post-date">2024/06/19</p> </div> </a><a href="/blog/undefined/" class="recent-post-item"> <img src="/blog-placeholder-5.jpg" alt=""> <div class="recent-post-content"> <h4 class="recent-post-title">Using MDX</h4> <p class="recent-post-date">2024/06/01</p> </div> </a> </div> </div> </div> <div class="sidebar-section"> <h3 class="sidebar-title">标签</h3> <div class="sidebar-content"> <div class="tag-cloud"> <a href="/tags/思考/" class="tag">思考 (12)</a><a href="/tags/工具/" class="tag">工具 (8)</a><a href="/tags/Heptabase/" class="tag">Heptabase (5)</a><a href="/tags/知识管理/" class="tag">知识管理 (7)</a><a href="/tags/生产力/" class="tag">生产力 (4)</a><a href="/tags/阅读/" class="tag">阅读 (6)</a><a href="/tags/写作/" class="tag">写作 (3)</a> </div> </div> </div> </aside> </div> </main> <footer class="footer" data-astro-cid-sz7xmlte> <div class="footer-inner" data-astro-cid-sz7xmlte> <div class="footer-content" data-astro-cid-sz7xmlte> <!-- 左侧信息 --> <div class="footer-left" data-astro-cid-sz7xmlte> <div class="footer-logo" data-astro-cid-sz7xmlte> <h3 data-astro-cid-sz7xmlte>读书写字</h3> </div> <p class="footer-description" data-astro-cid-sz7xmlte>每天进步1%，生活更美好</p> </div> <!-- 页脚链接 --> <div class="footer-links" data-astro-cid-sz7xmlte> <div class="footer-links-column" data-astro-cid-sz7xmlte> <h4 data-astro-cid-sz7xmlte>导航</h4> <ul data-astro-cid-sz7xmlte> <li data-astro-cid-sz7xmlte><a href="/" data-astro-cid-sz7xmlte>首页</a></li> <li data-astro-cid-sz7xmlte><a href="/blog" data-astro-cid-sz7xmlte>文章</a></li> <li data-astro-cid-sz7xmlte><a href="/videos" data-astro-cid-sz7xmlte>视频</a></li> <li data-astro-cid-sz7xmlte><a href="/me" data-astro-cid-sz7xmlte>关于我</a></li> </ul> </div> <div class="footer-links-column" data-astro-cid-sz7xmlte> <h4 data-astro-cid-sz7xmlte>分类</h4> <ul data-astro-cid-sz7xmlte> <li data-astro-cid-sz7xmlte><a href="/category/thinking" data-astro-cid-sz7xmlte>思考</a></li> <li data-astro-cid-sz7xmlte><a href="/category/tools" data-astro-cid-sz7xmlte>工具</a></li> <li data-astro-cid-sz7xmlte><a href="/category/reading" data-astro-cid-sz7xmlte>阅读</a></li> <li data-astro-cid-sz7xmlte><a href="/category/writing" data-astro-cid-sz7xmlte>写作</a></li> </ul> </div> <div class="footer-links-column" data-astro-cid-sz7xmlte> <h4 data-astro-cid-sz7xmlte>联系</h4> <div class="social-links" data-astro-cid-sz7xmlte> <!-- Twitter图标 --> <a href="https://twitter.com/example" target="_blank" class="social-icon" data-astro-cid-sz7xmlte> <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-astro-cid-sz7xmlte> <path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z" data-astro-cid-sz7xmlte></path> </svg> </a> <!-- Instagram图标 --> <a href="https://instagram.com/example" target="_blank" class="social-icon" data-astro-cid-sz7xmlte> <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-astro-cid-sz7xmlte> <rect x="2" y="2" width="20" height="20" rx="5" ry="5" data-astro-cid-sz7xmlte></rect> <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" data-astro-cid-sz7xmlte></path> <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" data-astro-cid-sz7xmlte></line> </svg> </a> </div> </div> </div> </div> <!-- 版权信息和返回顶部按钮 --> <div class="footer-bottom" data-astro-cid-sz7xmlte> <div class="copyright" data-astro-cid-sz7xmlte>
+&copy; 2026 读书写字. 保留所有权利.
+</div> <a href="#" class="back-to-top" data-astro-cid-sz7xmlte> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-astro-cid-sz7xmlte> <path d="M18 15l-6-6-6 6" data-astro-cid-sz7xmlte></path> </svg>
+返回顶部
+</a> </div> </div> </footer>    <div class="footer-bottom" data-astro-cid-sz7xmlte> <div class="copyright" data-astro-cid-sz7xmlte>
+&copy; 2026 读书写字 | 王浩
+</div> <a href="#" class="back-to-top" data-astro-cid-sz7xmlte>返回顶部</a> </div>  </body></html>
