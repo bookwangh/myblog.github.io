@@ -1,6 +1,7 @@
 ---
 import BaseHead from '../components/BaseHead.astro';
 import Header from '../components/Header.astro';
+import Navigation from '../components/Navigation.astro';
 import Footer from '../components/Footer.astro';
 import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
 import { getCollection } from 'astro:content';
@@ -23,619 +24,142 @@ const tags = [
 	{ name: "阅读", count: 6 },
 	{ name: "写作", count: 3 },
 ];
-
-// 更新的文章示例数据
-const articleExamples = [
-	{
-		title: "2025-05-14 | 读书心得",
-		date: "2025-05-14",
-		thumbnail: import.meta.env.BASE_URL + 'placeholder-hero.jpg',
-		url: import.meta.env.BASE_URL + 'blog/reading-notes',
-		excerpt: "最近读了一本好书，分享一下感受..."
-	},
-	{
-		title: "2025-05-10 | 写作技巧",
-		date: "2025-05-10",
-		thumbnail: import.meta.env.BASE_URL + 'placeholder-hero.jpg',
-		url: import.meta.env.BASE_URL + 'blog/writing-tips',
-		excerpt: "分享一些实用的写作技巧和方法..."
-	},
-	{
-		title: "2025-05-01 | 生产力工具推荐",
-		date: "2025-05-01",
-		thumbnail: import.meta.env.BASE_URL + 'placeholder-hero.jpg',
-		url: import.meta.env.BASE_URL + 'blog/productivity-tools',
-		excerpt: "推荐几款提升生产力的实用工具..."
-	}
-];
-
-// 更新的视频数据
-const videos = [
-	{
-		title: "2025-05-14 | 视频教程",
-		date: "2025-05-14",
-		thumbnail: import.meta.env.BASE_URL + 'placeholder-hero.jpg',
-		url: "https://www.youtube.com/embed/dQw4w9WgXcQ",
-		excerpt: "这是一个示例视频教程，展示如何使用新功能..."
-	},
-	{
-		title: "2025-05-10 | 读书分享",
-		date: "2025-05-10",
-		thumbnail: import.meta.env.BASE_URL + 'placeholder-hero.jpg',
-		url: "https://www.youtube.com/embed/dQw4w9WgXcQ",
-		excerpt: "分享最近读过的一本好书，以及个人感悟..."
-	},
-	{
-		title: "2025-05-01 | 工作流展示",
-		date: "2025-05-01",
-		thumbnail: import.meta.env.BASE_URL + 'placeholder-hero.jpg',
-		url: "https://www.youtube.com/embed/dQw4w9WgXcQ",
-		excerpt: "展示我的日常工作流程，包括工具和方法..."
-	}
-];
-
-// 当前激活的分类
-const activeCategory = 'articles'; // 可选值: 'articles', 'videos', 'about'
 ---
 
-<!DOCTYPE html>
+<!doctype html>
 <html lang="zh-CN">
-<head>
-  <style>
-    /* 强制删除所有边框和线条 */
-    body::before,
-    body::after,
-    body > *::before,
-    body > *::after,
-    header::before,
-    header::after,
-    body > div,
-    body > hr {
-      display: none !important;
-      border: none !important;
-      border-top: none !important;
-      border-bottom: none !important;
-      height: 0 !important;
-      background: transparent !important;
-    }
-    
-    /* 只保留我们需要的两条线 */
-    .header-new > div:nth-child(2),
-    .header-new > div:last-child {
-      display: block !important;
-    }
-  </style>
-  <!-- 直接在HTML开始处添加暗色模式脚本 -->
-  <script>
-    // 立即检查并应用暗色模式
-    const savedTheme = localStorage.getItem('theme');
-    if (savedTheme === 'dark') {
-      document.documentElement.classList.add('dark-mode');
-    }
-    
-    // 全局切换函数
-    window.toggleTheme = function() {
-      const html = document.documentElement;
-      const isDark = html.classList.contains('dark-mode');
-      
-      if (isDark) {
-        // 切换到亮色模式
-        html.classList.remove('dark-mode');
-        localStorage.setItem('theme', 'light');
-      } else {
-        // 切换到暗色模式
-        html.classList.add('dark-mode');
-        localStorage.setItem('theme', 'dark');
-      }
-      
-      // 强制刷新样式
-      setTimeout(function() {
-        document.body.style.display = 'none';
-        setTimeout(function() {
-          document.body.style.display = '';
-        }, 5);
-      }, 0);
-    };
-  </script>
-  
-  <!-- 内联暗色模式样式 -->
-  <style>
-    html.dark-mode {
-      background-color: #1A1A1A !important;
-      color: #FFFFFF !important;
-    }
-    
-    html.dark-mode body {
-      background-color: #1A1A1A !important;
-      color: #FFFFFF !important;
-    }
-    
-    html.dark-mode .header {
-      background-color: #1A1A1A !important;
-      border-bottom-color: #333333 !important;
-    }
-    
-    html.dark-mode .post-card,
-    html.dark-mode .video-card {
-      background-color: #222222 !important;
-      color: #FFFFFF !important;
-    }
-    
-    html.dark-mode .site-title,
-    html.dark-mode .nav-item,
-    html.dark-mode .post-title,
-    html.dark-mode h1, html.dark-mode h2, html.dark-mode h3 {
-      color: #FFFFFF !important;
-    }
-    
-    html.dark-mode .post-date,
-    html.dark-mode .post-excerpt {
-      color: #AAAAAA !important;
-    }
-  </style>
-  
-  <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
-</head>
-<body>
-  <Header />
-  <!-- 移除重复的导航栏，只保留Header组件中的导航 -->
-  <main>
-    <div class="three-column-layout">
-      <!-- 左侧空白列 (20%) -->
-      <div class="left-column"></div>
-      
-      <!-- 中间内容区域 (60%) -->
-      <div class="content-area">
-        <!-- 分类导航已移除 -->
-        <!-- 文章内容区域 -->
-        <div id="articles-section" class="content-section active">
-          <div class="post-list">
-            {articleExamples.map((article) => (
-              <div class="post-card">
-                <a href={article.url}>
-                  <h3 class="post-title">{article.title}</h3>
-                </a>
-                <p class="post-date">{article.date}</p>
-                <p class="post-excerpt">{article.excerpt}</p>
-                <a href={article.url} class="read-more">阅读更多</a>
-              </div>
-            ))}
-          </div>
-        </div>
-			if (savedTheme === 'dark') {
-				document.documentElement.classList.add('dark-mode');
-			}
-			
-			// 全局切换函数
-			window.toggleTheme = function() {
-				const html = document.documentElement;
-				const isDark = html.classList.contains('dark-mode');
-				
-				if (isDark) {
-					// 切换到亮色模式
-					html.classList.remove('dark-mode');
-					localStorage.setItem('theme', 'light');
-				} else {
-					// 切换到暗色模式
-					html.classList.add('dark-mode');
-					localStorage.setItem('theme', 'dark');
-				}
-				
-				// 强制刷新样式
-				setTimeout(function() {
-					document.body.style.display = 'none';
-					setTimeout(function() {
-						document.body.style.display = '';
-					}, 5);
-				}, 0);
-			};
-		</script>
-		
-		<!-- 内联暗色模式样式 -->
-		<style>
-			html.dark-mode {
-				background-color: #1A1A1A !important;
-				color: #FFFFFF !important;
-			}
-			
-			html.dark-mode body {
-				background-color: #1A1A1A !important;
-				color: #FFFFFF !important;
-			}
-			
-			html.dark-mode .header {
-				background-color: #1A1A1A !important;
-				border-bottom-color: #333333 !important;
-			}
-			
-			html.dark-mode .post-card,
-			html.dark-mode .video-card {
-				background-color: #222222 !important;
-				color: #FFFFFF !important;
-			}
-			
-			html.dark-mode .site-title,
-			html.dark-mode .nav-item,
-			html.dark-mode .post-title,
-			html.dark-mode h1, html.dark-mode h2, html.dark-mode h3 {
-				color: #FFFFFF !important;
-			}
-			
-			html.dark-mode .post-date,
-			html.dark-mode .post-excerpt {
-				color: #AAAAAA !important;
-			}
-		</style>
-		
+	<head>
 		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
 	</head>
 	<body>
 		<Header />
-		<!-- 移除重复的导航栏，只保留Header组件中的导航 -->
 		<main>
-			<div class="three-column-layout">
-				<!-- 左侧空白列 (20%) -->
-				<div class="left-column"></div>
-				
-				<!-- 中间内容区域 (60%) -->
+			<Navigation />
+
+			<div class="main-content">
 				<div class="content-area">
-					<!-- 分类导航已移除 -->
-					<!-- 文章内容区域 -->
-					<div id="articles-section" class="content-section active">
+					<section class="featured-section">
+						<h2 class="page-title">最新文章</h2>
 						<div class="post-list">
-							{articleExamples.map((article) => (
+							{recentPosts.map((post) => (
 								<div class="post-card">
-									<a href={article.url}>
-										<h3 class="post-title">{article.title}</h3>
+									<a href={`${import.meta.env.BASE_URL}blog/${post.slug}/`}>
+										<img src={post.data.heroImage || import.meta.env.BASE_URL + 'placeholder-hero.jpg'} alt="" />
+										<h3>{post.data.title}</h3>
+										<p class="date">{post.data.pubDate.toLocaleDateString('zh-CN', {
+											year: 'numeric',
+											month: '2-digit',
+											day: '2-digit',
+										})}</p>
+										<p class="excerpt">{post.data.description}</p>
 									</a>
-									<p class="post-date">{article.date}</p>
-									<p class="post-excerpt">{article.excerpt}</p>
-									<a href={article.url} class="read-more">阅读更多</a>
 								</div>
 							))}  
 						</div>
-					</div>
+					</section>
 
-					<!-- 视频内容区域 -->
-					<div id="videos-section" class="content-section">
-						<div class="video-list">
-							{videos.map((video) => (
-								<div class="video-card">
-									<div class="video-thumbnail" data-video-url={video.url}>
-										<img src={video.thumbnail} alt={video.title} />
-										<div class="play-button">
-											<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="white">
-												<path d="M8 5v14l11-7z"/>
-											</svg>
+					<section class="heptabase-section">
+						<h2 class="page-title">HEPTABASE</h2>
+						<div class="post-list">
+							<div class="post-card">
+								<a href={import.meta.env.BASE_URL + 'heptabase/intro'}>
+									<img src={import.meta.env.BASE_URL + 'heptabase-preview.jpg'} alt="Heptabase 介绍" />
+									<h3>Heptabase 白板可以怎么用？10 种简单的用法和例子</h3>
+									<p class="date">2024-01-30</p>
+									<p class="excerpt">探索 Heptabase 白板的多种用法，从思维导图到知识管理</p>
+								</a>
+							</div>
+							<div class="post-card">
+								<a href={import.meta.env.BASE_URL + 'heptabase/vs-scrintal'}>
+									<img src={import.meta.env.BASE_URL + 'heptabase-vs-scrintal.jpg'} alt="Heptabase vs Scrintal" />
+									<h3>Scrintal vs Heptabase: Heptabase 重度使用对 Scrintal 的八个观察</h3>
+									<p class="date">2024-01-22</p>
+									<p class="excerpt">比较两款流行的视觉知识管理工具的优缺点</p>
+								</a>
+							</div>
+							<div class="post-card">
+								<a href={import.meta.env.BASE_URL + 'heptabase/tag-system'}>
+									<img src={import.meta.env.BASE_URL + 'heptabase-tag.jpg'} alt="Heptabase 标签系统" />
+									<h3>如何用Heptabase 创建个人Ticket System</h3>
+									<p class="date">2023-12-15</p>
+									<p class="excerpt">利用标签系统构建个人任务管理系统</p>
+								</a>
+							</div>
+						</div>
+					</section>
+				</div>
+				
+				<aside class="sidebar">
+					<div class="sidebar-section">
+						<h3 class="sidebar-title">1% 就好</h3>
+						<div class="sidebar-content">
+							<p>我是王浩，这里是我的思考与探索。希望对你有所启发</p>
+							<div class="subscribe-form">
+								<input type="email" placeholder="Type your email..." />
+								<button>Subscribe</button>
+							</div>
+						</div>
+					</div>
+					
+					<div class="sidebar-section">
+						<h3 class="sidebar-title">最近文章</h3>
+						<div class="sidebar-content">
+							<div class="recent-posts">
+								{recentPosts.map((post) => (
+									<a href={`${import.meta.env.BASE_URL}blog/${post.slug}/`} class="recent-post-item">
+										<img src={post.data.heroImage || import.meta.env.BASE_URL + 'placeholder-hero.jpg'} alt="" />
+										<div class="recent-post-content">
+											<h4 class="recent-post-title">{post.data.title}</h4>
+											<p class="recent-post-date">{post.data.pubDate.toLocaleDateString('zh-CN', {
+												year: 'numeric',
+												month: '2-digit',
+												day: '2-digit',
+											})}</p>
 										</div>
-									</div>
-									<h3>{video.title}</h3>
-									<p class="date">{video.date}</p>
-									<p class="excerpt">{video.excerpt}</p>
-								</div>
-							))}
+									</a>
+								))}
+							</div>
 						</div>
 					</div>
-
-					<!-- 关于我 -->
-					<div id="about-section" class="content-section">
-						<div class="about-section">
-							<h2>关于我</h2>
-							<p>你好，我是一名热爱阅读和写作的博主。这个博客是我分享阅读心得、写作技巧和思考的地方。</p>
-							<p>我相信阅读和写作是提升思考能力和认知水平的重要途径。通过这个博客，我希望能与志同道合的朋友一起成长。</p>
-							<p>如果你有任何问题或建议，欢迎通过右侧的订阅区域与我联系。</p>
+					
+					<div class="sidebar-section">
+						<h3 class="sidebar-title">标签</h3>
+						<div class="sidebar-content">
+							<div class="tag-cloud">
+								{tags.map((tag) => (
+									<a href={`${import.meta.env.BASE_URL}tags/${tag.name}/`} class="tag">{tag.name} ({tag.count})</a>
+								))}
+							</div>
 						</div>
 					</div>
-				</div>
-
-				<!-- 右侧订阅区 -->
-				<div class="sidebar">
-					<div class="subscription-box">
-						<h3>订阅</h3>
-						<p>通过邮件订阅最新内容</p>
-						<div class="subscription-form">
-							<input type="email" placeholder="输入您的邮箱" class="subscription-input">
-							<button class="subscription-button">订阅</button>
-						</div>
-					</div>
-				</div>
-			</div>
-
-			<!-- 视频模态框 -->
-			<div id="videoModal" class="modal">
-				<span class="modal-close">&times;</span>
-				<div class="modal-content">
-					<div class="video-container">
-						<iframe id="videoFrame" src="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-					</div>
-				</div>
+				</aside>
 			</div>
 		</main>
 		<Footer />
-		
-		<!-- 搜索框覆盖层 - 简洁设计 -->
-		<div id="searchOverlay" class="search-overlay">
-			<div class="search-container">
-				<form id="searchForm" class="search-form">
-					<input type="text" id="searchInput" class="search-input" placeholder="Type and hit enter...">
-					<button id="searchCloseBtn" class="search-close-btn">
-						<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-							<line x1="18" y1="6" x2="6" y2="18"></line>
-							<line x1="6" y1="6" x2="18" y2="18"></line>
-						</svg>
-					</button>
-					<button type="submit" class="search-submit-btn">
-						<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-							<circle cx="11" cy="11" r="8"></circle>
-							<line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-						</svg>
-					</button>
-				</form>
-			</div>
-		</div>
 	</body>
 </html>
 
 <style>
-	/* 三列布局样式 */
-	.three-column-layout {
-		display: grid;
-		grid-template-columns: 20% 60% 20%;
-		gap: var(--spacing-md);
-		max-width: var(--max-width);
-		margin: 0 auto;
-		padding: var(--spacing-lg);
+	.hero {
+		padding: 4rem 0;
+		text-align: center;
 	}
 
-	/* 左侧空白列 */
-	.left-column {
-		grid-column: 1;
+	.hero-content h1 {
+		font-size: 3rem;
+		font-weight: 500;
+		margin-bottom: 1rem;
 	}
 
-	/* 中间内容区 */
-	.content-area {
-		grid-column: 2;
+	.subtitle {
+		font-size: 1.2rem;
+		color: rgb(var(--gray));
 	}
 
-	/* 右侧订阅区 */
-	.sidebar {
-		grid-column: 3;
+	.featured-section,
+	.heptabase-section {
+		padding: 2rem 0;
 	}
 
-	/* 内容区域显示控制 */
-	.content-section {
-		display: none;
-	}
-
-	.content-section.active {
-		display: block;
-	}
-
-	/* 视频卡片样式 */
-	.video-card {
-		background-color: var(--background-color);
-		border-radius: 8px;
-		overflow: hidden;
-		box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-		transition: transform 0.3s ease;
-		margin-bottom: var(--spacing-md);
-	}
-
-	.video-card:hover {
-		transform: scale(1.05);
-	}
-
-	.video-thumbnail {
-		position: relative;
-		cursor: pointer;
-	}
-
-	.video-thumbnail img {
-		width: 100%;
-		height: 200px;
-		object-fit: cover;
-	}
-
-	.play-button {
-		position: absolute;
-		top: 50%;
-		left: 50%;
-		transform: translate(-50%, -50%);
-		background-color: rgba(0, 0, 0, 0.6);
-		border-radius: 50%;
-		width: 60px;
-		height: 60px;
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		transition: background-color 0.3s ease;
-	}
-
-	.video-thumbnail:hover .play-button {
-		background-color: rgba(0, 0, 0, 0.8);
-	}
-
-	.post-list, .video-list {
-		display: grid;
-		grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-		gap: var(--spacing-md);
-	}
-
-	/* 响应式设计 */
-	@media (max-width: 1200px) {
-		.three-column-layout {
-			grid-template-columns: 20% 60% 20%;
-		}
-	}
-
-	@media (max-width: 992px) {
-		.three-column-layout {
-			grid-template-columns: 1fr 3fr;
-		}
-
-		.left-column {
-			display: none;
-		}
-
-		.content-area {
-			grid-column: 1;
-		}
-
-		.sidebar {
-			grid-column: 2;
-		}
-	}
-
-	@media (max-width: 768px) {
-		.three-column-layout {
-			grid-template-columns: 1fr;
-			padding: var(--spacing-md);
-		}
-
-		.content-area,
-		.sidebar {
-			grid-column: 1;
-			width: 100%;
-		}
-
-		.post-list, .video-list {
-			grid-template-columns: 1fr;
-		}
-	}
+	/* 其他样式已在全局CSS中定义 */
 </style>
-
-<script>
-	// 页面加载完成后执行
-	document.addEventListener('DOMContentLoaded', () => {
-		// 分类切换功能
-		const articleTab = document.getElementById('articles-tab');
-		const videosTab = document.getElementById('videos-tab');
-		const aboutTab = document.getElementById('about-tab');
-
-		const articlesContent = document.getElementById('articles-content');
-		const videosContent = document.getElementById('videos-content');
-		const aboutContent = document.getElementById('about-content');
-
-		// 默认显示文章分类
-		showContent('articles');
-
-		// 添加点击事件监听器
-		articleTab.addEventListener('click', (e) => {
-			e.preventDefault();
-			showContent('articles');
-			// 同步更新Header导航状态
-			updateHeaderNav('articles');
-		});
-
-		videosTab.addEventListener('click', (e) => {
-			e.preventDefault();
-			showContent('videos');
-			// 同步更新Header导航状态
-			updateHeaderNav('videos');
-		});
-
-		aboutTab.addEventListener('click', (e) => {
-			e.preventDefault();
-			showContent('about');
-			// 同步更新Header导航状态
-			updateHeaderNav('about');
-		});
-
-		// 显示指定分类内容的函数
-		function showContent(category) {
-			// 隐藏所有内容
-			articlesContent.classList.remove('active');
-			videosContent.classList.remove('active');
-			aboutContent.classList.remove('active');
-
-			// 移除所有标签的活动状态
-			articleTab.classList.remove('active');
-			videosTab.classList.remove('active');
-			aboutTab.classList.remove('active');
-
-			// 显示选中的内容和标签
-			if (category === 'articles') {
-				articlesContent.classList.add('active');
-				articleTab.classList.add('active');
-			} else if (category === 'videos') {
-				videosContent.classList.add('active');
-				videosTab.classList.add('active');
-			} else if (category === 'about') {
-				aboutContent.classList.add('active');
-				aboutTab.classList.add('active');
-			}
-		}
-
-		// 更新Header导航状态
-		function updateHeaderNav(category) {
-			const navArticles = document.getElementById('nav-articles');
-			const navVideos = document.getElementById('nav-videos');
-			const navAbout = document.getElementById('nav-about');
-
-			// 移除所有导航项的活动状态
-			navArticles.classList.remove('active');
-			navVideos.classList.remove('active');
-			navAbout.classList.remove('active');
-
-			// 设置当前导航项的活动状态
-			if (category === 'articles') {
-				navArticles.classList.add('active');
-			} else if (category === 'videos') {
-				navVideos.classList.add('active');
-			} else if (category === 'about') {
-				navAbout.classList.add('active');
-			}
-		}
-
-		// 监听Header导航点击事件
-		const navArticles = document.getElementById('nav-articles');
-		const navVideos = document.getElementById('nav-videos');
-		const navAbout = document.getElementById('nav-about');
-
-		if (navArticles && navVideos && navAbout) {
-			// 这些事件监听已在Header.astro中设置，这里不需要重复添加
-			// 但我们需要确保初始状态正确
-			updateHeaderNav('articles');
-		}
-
-		// 视频模态框功能
-		const videoThumbnails = document.querySelectorAll('.video-thumbnail');
-		const videoModal = document.getElementById('videoModal');
-		const videoFrame = document.getElementById('videoFrame');
-		const modalClose = document.querySelector('.modal-close');
-
-		videoThumbnails.forEach(thumbnail => {
-			thumbnail.addEventListener('click', () => {
-				const videoUrl = thumbnail.getAttribute('data-video-url');
-				videoFrame.src = videoUrl;
-				videoModal.style.display = 'flex';
-			});
-		});
-
-		modalClose.addEventListener('click', () => {
-			videoModal.style.display = 'none';
-			videoFrame.src = '';
-		});
-
-		window.addEventListener('click', (event) => {
-			if (event.target === videoModal) {
-				videoModal.style.display = 'none';
-				videoFrame.src = '';
-			}
-		});
-
-		// 返回顶部功能
-		const backToTopButton = document.querySelector('.back-to-top');
-		if (backToTopButton) {
-			backToTopButton.addEventListener('click', (e) => {
-				e.preventDefault();
-				window.scrollTo({
-					top: 0,
-					behavior: 'smooth'
-				});
-			});
-		}
-
-		// 暗色模式切换已移至全局theme.js脚本
-	});
-</script>
