@@ -1,0 +1,158 @@
+---
+import FontLoader from '../components/FontLoader.astro';
+import FirewoodHeader from '../components/FirewoodHeader.astro';
+import SearchDialog from '../components/SearchDialog.astro';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const { title = "烽火", description = "记录生活，分享思考" } = Astro.props;
+---
+
+<!doctype html>
+<html lang="zh-CN" class="">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="description" content={description} />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+
+    <title>{title}</title>
+
+    <FontLoader />
+
+    <link rel="stylesheet" href="/styles/firewood-variables.css" />
+
+    <style is:global>
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        font-family: var(--font-sans);
+        font-size: var(--font-base);
+        line-height: 1.6;
+        color: var(--text-primary);
+        background-color: var(--bg-primary);
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+      }
+
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+
+      button {
+        font-family: inherit;
+        font-size: inherit;
+      }
+
+      ::selection {
+        background-color: rgba(230, 57, 70, 0.2);
+        color: var(--text-primary);
+      }
+    </style>
+  </head>
+
+  <body>
+    <FirewoodHeader title={title} />
+    <SearchDialog />
+
+    <main>
+      <slot />
+    </main>
+
+    <style is:global>
+      main {
+        padding-top: 48px;
+      }
+    </style>
+
+    <script>
+      const searchDialog = document.getElementById('search-dialog');
+      const searchButton = document.getElementById('search-button');
+      const searchClose = document.getElementById('search-close');
+      const searchBackdrop = document.getElementById('search-backdrop');
+      const searchInput = document.getElementById('search-input');
+
+      function openSearchDialog() {
+        searchDialog?.classList.add('open');
+        searchInput?.focus();
+        document.body.style.overflow = 'hidden';
+      }
+
+      function closeSearchDialog() {
+        searchDialog?.classList.remove('open');
+        document.body.style.overflow = '';
+        searchInput?.blur();
+      }
+
+      searchButton?.addEventListener('click', openSearchDialog);
+      searchClose?.addEventListener('click', closeSearchDialog);
+      searchBackdrop?.addEventListener('click', closeSearchDialog);
+
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && searchDialog?.classList.contains('open')) {
+          closeSearchDialog();
+        }
+
+        if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+          e.preventDefault();
+          if (searchDialog?.classList.contains('open')) {
+            closeSearchDialog();
+          } else {
+            openSearchDialog();
+          }
+        }
+      });
+
+      function getSystemTheme() {
+        return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      }
+
+      function getStoredTheme() {
+        try {
+          return localStorage.getItem('theme');
+        } catch {
+          return null;
+        }
+      }
+
+      function setTheme(theme: 'light' | 'dark') {
+        const html = document.documentElement;
+        if (theme === 'dark') {
+          html.classList.add('dark-mode');
+        } else {
+          html.classList.remove('dark-mode');
+        }
+        try {
+          localStorage.setItem('theme', theme);
+        } catch {}
+      }
+
+      function initTheme() {
+        const stored = getStoredTheme();
+        const system = getSystemTheme();
+        setTheme((stored || system) as 'light' | 'dark');
+      }
+
+      initTheme();
+
+      window.addEventListener('theme-toggle', (e: Event) => {
+        const customEvent = e as CustomEvent<'light' | 'dark'>;
+        const currentTheme = document.documentElement.classList.contains('dark-mode') ? 'dark' : 'light';
+        setTheme(currentTheme === 'dark' ? 'light' : 'dark');
+      });
+    </script>
+  </body>
+</html>

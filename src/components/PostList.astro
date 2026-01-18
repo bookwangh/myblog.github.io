@@ -1,0 +1,79 @@
+---
+import PostCard from './PostCard.astro';
+import PostTabs from './PostTabs.astro';
+
+interface Post {
+  slug: string;
+  title: string;
+  excerpt?: string;
+  image?: string;
+  date: string;
+  author?: string;
+  tags?: string[];
+  views?: number;
+}
+
+interface Props {
+  posts: Post[];
+  featuredCount?: number;
+}
+
+const { posts, featuredCount = 1 } = Astro.props;
+
+const featuredPosts = posts.slice(0, featuredCount);
+const regularPosts = posts.slice(featuredCount);
+
+const trendingPosts = [...posts].sort((a, b) => (b.views || 0) - (a.views || 0));
+---
+
+<div class="post-list-wrapper">
+  <div class="post-list">
+    <PostTabs activeTab="latest" />
+
+    <div class="post-list-content" id="post-list-latest">
+      {featuredPosts.map((post) => (
+        <PostCard post={post} featured={true} />
+      ))}
+
+      {regularPosts.map((post) => (
+        <PostCard post={post} featured={false} />
+      ))}
+    </div>
+
+    <div class="post-list-content" id="post-list-trending" style="display: none;">
+      {trendingPosts.slice(0, featuredCount).map((post) => (
+        <PostCard post={post} featured={true} />
+      ))}
+
+      {trendingPosts.slice(featuredCount).map((post) => (
+        <PostCard post={post} featured={false} />
+      ))}
+    </div>
+  </div>
+</div>
+
+<script>
+  const tabs = document.querySelectorAll('.q-tab');
+  const latestList = document.getElementById('post-list-latest');
+  const trendingList = document.getElementById('post-list-trending');
+
+  tabs.forEach((tab) => {
+    tab.addEventListener('click', (e) => {
+      const target = e.currentTarget as HTMLElement;
+      const activeTab = target.dataset.tab;
+
+      if (!activeTab) return;
+
+      tabs.forEach((t) => t.classList.remove('active'));
+      target.classList.add('active');
+
+      if (activeTab === 'latest') {
+        latestList!.style.display = 'block';
+        trendingList!.style.display = 'none';
+      } else {
+        latestList!.style.display = 'none';
+        trendingList!.style.display = 'block';
+      }
+    });
+  });
+</script>

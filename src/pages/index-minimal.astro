@@ -1,0 +1,78 @@
+---
+import BaseHead from '../components/BaseHead.astro';
+import MinimalHeader from '../components/MinimalHeader.astro';
+import MinimalFooter from '../components/MinimalFooter.astro';
+import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
+import { getCollection } from 'astro:content';
+
+const posts = (await getCollection('blog')).sort(
+  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
+);
+
+const featuredPost = posts[0];
+const recentPosts = posts.slice(0, 4);
+---
+
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+    <link rel="stylesheet" href="/styles/minimal-modern.css" />
+  </head>
+  <body>
+    <MinimalHeader />
+
+    <section class="hero-section">
+      <div class="hero-content">
+        <h1 class="hero-title">{SITE_TITLE}</h1>
+        <p class="hero-subtitle">{SITE_DESCRIPTION}</p>
+      </div>
+    </section>
+
+    <section class="content-grid">
+      {featuredPost && (
+        <article class="featured-card">
+          <a href={`/blog/${featuredPost.id}/`}>
+            <img
+              src={featuredPost.data.heroImage || '/placeholder-hero.jpg'}
+              alt={featuredPost.data.title}
+              class="featured-image"
+            />
+            <div class="featured-overlay">
+              <h2 class="featured-title">{featuredPost.data.title}</h2>
+              <p class="featured-meta">{featuredPost.data.pubDate.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}</p>
+            </div>
+          </a>
+        </article>
+      )}
+
+      <div class="post-grid">
+        {recentPosts.map((post) => (
+          <a href={`/blog/${post.id}/`} class="post-card">
+            <div class="post-image-wrapper">
+              <img
+                src={post.data.heroImage || '/placeholder-hero.jpg'}
+                alt={post.data.title}
+                class="post-image"
+              />
+            </div>
+            <div class="post-content">
+              <p class="post-category">Article</p>
+              <h3 class="post-title">{post.data.title}</h3>
+              <p class="post-excerpt">{post.data.description}</p>
+              <div class="post-meta">
+                <span class="post-date">{post.data.pubDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}</span>
+              </div>
+            </div>
+          </a>
+        ))}
+      </div>
+    </section>
+
+    <section class="load-more-container">
+      <button class="load-more-btn">加载更多</button>
+    </section>
+
+    <MinimalFooter />
+  </body>
+</html>

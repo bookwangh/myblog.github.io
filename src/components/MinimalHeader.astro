@@ -1,0 +1,44 @@
+---
+const SITE_TITLE = '读书写字';
+---
+
+<header class="minimal-header">
+  <div class="header-content">
+    <div class="site-branding">
+      <a href="/" class="site-logo">{SITE_TITLE}</a>
+    </div>
+
+    <nav class="minimal-nav">
+      <a href="/" class="nav-link active">首页</a>
+      <a href="/blog" class="nav-link">文章</a>
+      <a href="/about" class="nav-link">关于</a>
+    </nav>
+
+    <div class="header-actions">
+      <button class="action-btn" id="theme-toggle" aria-label="Toggle theme">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="5"/>
+          <line x1="12" y1="1" x2="12" y2="3"/>
+          <line x1="12" y1="21" x2="12" y2="23"/>
+          <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
+          <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<script>
+  const themeToggle = document.getElementById('theme-toggle');
+  const savedTheme = localStorage.getItem('theme') || 'light';
+
+  document.documentElement.setAttribute('data-theme', savedTheme);
+
+  themeToggle?.addEventListener('click', () => {
+    const currentTheme = document.documentElement.getAttribute('data-theme');
+    const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+
+    document.documentElement.setAttribute('data-theme', newTheme);
+    localStorage.setItem('theme', newTheme);
+  });
+</script>

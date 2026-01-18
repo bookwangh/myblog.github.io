@@ -1,0 +1,358 @@
+---
+interface Props {
+  title?: string;
+  logoUrl?: string;
+}
+
+const { title = "烽火", logoUrl } = Astro.props;
+---
+
+<header class="list-intro" id="list-intro">
+  <div class="container">
+    <div class="header-inner">
+      <div class="inner-left">
+        <a href="/" class="brand-link" aria-label="返回首页">
+          {logoUrl && <img src={logoUrl} alt="Logo" class="logo" />}
+          <h1 class="site-title">{title}</h1>
+        </a>
+
+        <nav class="nav">
+          <a href="/" class="nav-item selected" aria-label="最新文章">
+            <span class="nav-label">最新</span>
+          </a>
+          <a href="/trending" class="nav-item" aria-label="热门文章">
+            <span class="nav-label">最热</span>
+          </a>
+        </nav>
+      </div>
+
+      <div class="inner-right">
+        <button
+          class="icon-button search-button"
+          aria-label="搜索"
+          id="search-button"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="20"
+            height="20"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+        </button>
+
+        <button
+          class="icon-button theme-button"
+          aria-label="切换主题"
+          id="theme-button"
+        >
+          <svg
+            class="sun-icon"
+            xmlns="http://www.w3.org/2000/svg"
+            width="20"
+            height="20"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            style="display: none;"
+          >
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+          </svg>
+
+          <svg
+            class="moon-icon"
+            xmlns="http://www.w3.org/2000/svg"
+            width="20"
+            height="20"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+          </svg>
+        </button>
+
+        <button
+          class="join-member-button"
+          aria-label="加入会员"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="20"
+            height="20"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+            <circle cx="12" cy="7" r="4"></circle>
+          </svg>
+          <span>会员</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</header>
+
+<style>
+  .list-intro {
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 48px;
+    padding: 0 1rem;
+    z-index: var(--z-sticky);
+    display: flex;
+    width: 100%;
+    background-color: var(--bg-primary);
+    transition: all var(--transition-base) ease-in-out;
+  }
+
+  .list-intro.fixed {
+    position: fixed;
+    z-index: var(--z-fixed);
+    border-bottom: none;
+    animation: slide-down var(--transition-slow) ease-in-out;
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+    background: linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.8) 0%,
+      rgba(244, 244, 244, 0.6) 100%
+    );
+    box-shadow: var(--shadow-sm);
+  }
+
+  @keyframes slide-down {
+    from {
+      transform: translateY(-100%);
+      opacity: 0;
+    }
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+
+  .container {
+    max-width: var(--page-width);
+    margin: 0 auto;
+    width: 100%;
+  }
+
+  .header-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 100%;
+  }
+
+  .inner-left {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-lg);
+  }
+
+  .brand-link {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    text-decoration: none;
+    transition: opacity var(--transition-base);
+  }
+
+  .brand-link:hover {
+    opacity: 0.8;
+  }
+
+  .logo {
+    width: 28px;
+    height: 28px;
+    border-radius: var(--radius-sm);
+  }
+
+  .site-title {
+    font-family: var(--font-sans);
+    font-size: var(--font-lg);
+    font-weight: var(--font-weight-bold);
+    color: var(--text-primary);
+    margin: 0;
+    line-height: 1.2;
+  }
+
+  .nav {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    padding-left: var(--spacing-lg);
+  }
+
+  .nav-item {
+    text-decoration: none;
+    display: block;
+  }
+
+  .nav-label {
+    padding: var(--spacing-xs);
+    color: var(--text-primary);
+    transition: all var(--transition-base) ease-in-out;
+    border-radius: var(--radius-md);
+    height: 32px;
+    display: flex;
+    align-items: center;
+    font-family: var(--font-sans);
+    font-size: var(--font-base);
+    font-weight: var(--font-weight-medium);
+    cursor: pointer;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .nav-item:hover .nav-label {
+    background-color: rgba(0, 0, 0, 0.05);
+  }
+
+  .nav-item.selected .nav-label {
+    color: var(--accent-red) !important;
+  }
+
+  .inner-right {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+  }
+
+  .icon-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--spacing-sm);
+    border: none;
+    background: transparent;
+    color: var(--text-secondary);
+    cursor: pointer;
+    border-radius: var(--radius-md);
+    transition: all var(--transition-base) ease-in-out;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .icon-button:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+    color: var(--text-primary);
+  }
+
+  .icon-button:focus {
+    outline: 2px solid var(--accent-red);
+    outline-offset: 2px;
+  }
+
+  .join-member-button {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    padding: var(--spacing-sm) var(--spacing-md);
+    border: none;
+    background-color: var(--accent-red);
+    color: white;
+    font-family: var(--font-sans);
+    font-size: var(--font-sm);
+    font-weight: var(--font-weight-medium);
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    transition: all var(--transition-base) ease-in-out;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .join-member-button:hover {
+    background-color: var(--accent-red-hover);
+    transform: translateY(-1px);
+  }
+
+  .join-member-button:focus {
+    outline: 2px solid var(--accent-red);
+    outline-offset: 2px;
+  }
+
+  .join-member-button svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  @media screen and (max-width: 768px) {
+    .join-member-button span {
+      display: none;
+    }
+
+    .site-title {
+      max-width: 180px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .nav {
+      padding-left: var(--spacing-sm);
+    }
+
+    .nav-label {
+      font-size: var(--font-sm);
+    }
+  }
+</style>
+
+<script>
+  const header = document.getElementById('list-intro');
+  const themeButton = document.getElementById('theme-button');
+  const sunIcon = document.querySelector('.sun-icon');
+  const moonIcon = document.querySelector('.moon-icon');
+
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 350) {
+      header?.classList.add('fixed');
+    } else {
+      header?.classList.remove('fixed');
+    }
+  });
+
+  function updateThemeIcons() {
+    const isDark = document.documentElement.classList.contains('dark-mode');
+    if (sunIcon && moonIcon) {
+      (sunIcon as HTMLElement).style.display = isDark ? 'block' : 'none';
+      (moonIcon as HTMLElement).style.display = isDark ? 'none' : 'block';
+    }
+  }
+
+  updateThemeIcons();
+
+  window.addEventListener('theme-toggle', updateThemeIcons);
+
+  themeButton?.addEventListener('click', () => {
+    window.dispatchEvent(new CustomEvent('theme-toggle'));
+  });
+</script>

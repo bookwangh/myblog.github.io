@@ -1,0 +1,275 @@
+---
+const today = new Date();
+const SITE_TITLE = '读书写字';
+---
+
+<footer class="magazine-footer">
+  <div class="footer-ornament">
+    <div class="ornament-line"></div>
+    <div class="ornament-diamond"></div>
+    <div class="ornament-line"></div>
+  </div>
+
+  <div class="footer-content">
+    <div class="footer-brand">
+      <h3 class="footer-title">{SITE_TITLE}</h3>
+      <p class="footer-tagline">Reading, Writing, & Living</p>
+      <p class="footer-description">
+        Exploring the intersection of literature, philosophy and modern life.
+        A personal journal of thoughts and discoveries.
+      </p>
+    </div>
+
+    <div class="footer-links-section">
+      <h4 class="footer-section-title">Navigation</h4>
+      <ul class="footer-links">
+        <li><a href="/">Home</a></li>
+        <li><a href="/blog">Articles</a></li>
+        <li><a href="/videos">Essays</a></li>
+        <li><a href="/about">About</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-links-section">
+      <h4 class="footer-section-title">Connect</h4>
+      <div class="social-links">
+        <a href="https://twitter.com" target="_blank" class="social-link" aria-label="Twitter">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z"/>
+          </svg>
+        </a>
+        <a href="https://github.com" target="_blank" class="social-link" aria-label="GitHub">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261 1.16-.525.054-.109.07-.215.07-.331 0-1.528-.634-2.906-1.718-3.889-3.409-.736-1.19-.972-2.658-.655-4.296.277-1.239.964-2.343 1.865-3.279.724-1.025 1.997-2.395 3.276-3.279.503-.776.694-1.596.972-2.47.667-3.068 1.482-5.016 5.411-5.016 10.078 0 1.885.589 3.818 1.67 5.412-.975-2.632-1.028-5.746-1.068-8.576 0-3.421.481-6.709 1.668-9.374 2.715-1.778 4.729-4.093 4.729-7.025 0-1.839-.426-3.621-1.218-5.207-2.633-1.735-5.775-2.632-9.313-2.632-3.452 0-6.713.797-9.727 2.454-2.738 4.773-5.915 4.773-9.713 0-5.525-4.475-10-10-10z"/>
+          </svg>
+        </a>
+        <a href="mailto:contact@example.com" class="social-link" aria-label="Email">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+            <polyline points="22,6 12,13 2,6"/>
+          </svg>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <p class="copyright">
+      &copy; {today.getFullYear()} {SITE_TITLE}. All rights reserved.
+    </p>
+    <a href="#" class="back-to-top" aria-label="Back to top">
+      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <polyline points="18 15 12 9 6 15"/>
+      </svg>
+    </a>
+  </div>
+</footer>
+
+<style>
+  .magazine-footer {
+    background: var(--ink-black);
+    color: var(--ivory);
+    padding: var(--space-12) 0;
+    margin-top: var(--space-24);
+  }
+
+  .footer-ornament {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-bottom: var(--space-8);
+    margin-bottom: var(--space-8);
+  }
+
+  .ornament-line {
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, transparent 0%, var(--gold) 20%, var(--gold) 80%, transparent 100%);
+  }
+
+  .ornament-diamond {
+    width: 12px;
+    height: 12px;
+    background: var(--gold);
+    transform: rotate(45deg);
+    margin: 0 var(--space-6);
+  }
+
+  .footer-content {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 var(--space-8);
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    gap: var(--space-12);
+  }
+
+  .footer-brand {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+  }
+
+  .footer-title {
+    font-family: var(--font-display);
+    font-size: var(--text-2xl);
+    font-weight: var(--font-bold);
+    color: var(--ivory);
+    margin: 0;
+    letter-spacing: var(--tracking-wide);
+  }
+
+  .footer-tagline {
+    font-family: var(--font-ui);
+    font-size: var(--text-sm);
+    font-weight: var(--font-semibold);
+    color: var(--gold);
+    letter-spacing: var(--tracking-wider);
+    text-transform: uppercase;
+    margin: 0;
+  }
+
+  .footer-description {
+    font-family: var(--font-body);
+    font-size: var(--text-sm);
+    line-height: var(--leading-relaxed);
+    color: var(--cream);
+    max-width: 400px;
+    margin: 0;
+  }
+
+  .footer-links-section {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+  }
+
+  .footer-section-title {
+    font-family: var(--font-ui);
+    font-size: var(--text-xs);
+    font-weight: var(--font-semibold);
+    letter-spacing: var(--tracking-widest);
+    text-transform: uppercase;
+    color: var(--gold);
+    margin: 0;
+  }
+
+  .footer-links {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+
+  .footer-links li {
+    margin: 0;
+  }
+
+  .footer-links a {
+    font-family: var(--font-ui);
+    font-size: var(--text-sm);
+    color: var(--cream);
+    text-decoration: none;
+    transition: color var(--transition-fast);
+  }
+
+  .footer-links a:hover {
+    color: var(--gold);
+  }
+
+  .social-links {
+    display: flex;
+    gap: var(--space-4);
+    margin-top: var(--space-2);
+  }
+
+  .social-link {
+    width: 40px;
+    height: 40px;
+    border: 1px solid var(--cream);
+    border-radius: var(--radius-full);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--cream);
+    transition: all var(--transition-fast);
+  }
+
+  .social-link:hover {
+    background: var(--burgundy);
+    border-color: var(--burgundy);
+    color: var(--text-inverse);
+  }
+
+  .footer-bottom {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: var(--space-8) var(--space-8) 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid var(--ink-charcoal);
+    font-family: var(--font-ui);
+    font-size: var(--text-xs);
+  }
+
+  .copyright {
+    color: var(--cream);
+    margin: 0;
+  }
+
+  .back-to-top {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    color: var(--cream);
+    text-decoration: none;
+    transition: color var(--transition-fast);
+  }
+
+  .back-to-top:hover {
+    color: var(--gold);
+  }
+
+  @media (max-width: 992px) {
+    .footer-content {
+      grid-template-columns: 1fr;
+      text-align: center;
+    }
+
+    .footer-brand,
+    .footer-links-section {
+      align-items: center;
+    }
+
+    .footer-description {
+      max-width: 100%;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .footer-bottom {
+      flex-direction: column;
+      gap: var(--space-4);
+      text-align: center;
+    }
+
+    .social-links {
+      justify-content: center;
+    }
+  }
+</style>
+
+<script>
+  const backToTop = document.querySelector('.back-to-top');
+
+  backToTop?.addEventListener('click', (e) => {
+    e.preventDefault();
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+  });
+</script>

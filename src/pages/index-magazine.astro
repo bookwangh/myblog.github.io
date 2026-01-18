@@ -1,0 +1,99 @@
+---
+import BaseHead from '../components/BaseHead.astro';
+import MagazineHeader from '../components/MagazineHeader.astro';
+import Footer from '../components/Footer.astro';
+import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
+import { getCollection } from 'astro:content';
+
+const posts = (await getCollection('blog')).sort(
+  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
+);
+
+const featuredPost = posts[0];
+const regularPosts = posts.slice(1);
+---
+
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+  </head>
+  <body>
+    <MagazineHeader />
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+      <div class="hero-content animate-slide-up">
+        <div class="hero-text">
+          <span class="hero-tagline">Welcome</span>
+          <h1 class="hero-title">
+            Thoughts on <span class="highlight">Reading</span> & Writing
+          </h1>
+          <p class="hero-description">
+            {SITE_DESCRIPTION}
+          </p>
+          <div class="hero-cta">
+            <a href="/blog" class="btn-magazine btn-primary">Start Reading</a>
+            <a href="/about" class="btn-magazine btn-secondary">Learn More</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Magazine Grid -->
+    <section class="magazine-grid">
+      {featuredPost && (
+        <article class="featured-post animate-fade-scale">
+          <a href={`/blog/${featuredPost.id}/`}>
+            <img
+              src={featuredPost.data.heroImage || '/placeholder-hero.jpg'}
+              alt={featuredPost.data.title}
+              class="featured-image"
+            />
+            <div class="featured-content">
+              <span class="featured-tag">Featured</span>
+              <h2 class="featured-title">{featuredPost.data.title}</h2>
+              <div class="featured-meta">
+                <span>{featuredPost.data.pubDate.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}</span>
+              </div>
+            </div>
+          </a>
+        </article>
+      )}
+
+      {regularPosts.map((post, index) => (
+        <article class="post-card animate-fade-scale">
+          <a href={`/blog/${post.id}/`}>
+            <img
+              src={post.data.heroImage || '/placeholder-hero.jpg'}
+              alt={post.data.title}
+              class="post-image"
+            />
+            <div class="post-content">
+              <span class="post-category">Article</span>
+              <h3 class="post-title">{post.data.title}</h3>
+              <p class="post-excerpt">{post.data.description}</p>
+              <div class="post-meta">
+                <span>Wang Hao</span>
+                <span>·</span>
+                <span>{post.data.pubDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}</span>
+              </div>
+            </div>
+          </a>
+        </article>
+      ))}
+    </section>
+
+    <Footer />
+
+     <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        const cards = document.querySelectorAll('.post-card, .featured-post');
+
+        cards.forEach((card, index) => {
+          (card as HTMLElement).style.setProperty('animation-delay', `${index * 0.1}s`);
+        });
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,225 @@
+---
+interface Props {
+  siteTitle?: string;
+  description?: string;
+}
+
+const { siteTitle = "烽火", description = "记录生活，分享思考" } = Astro.props;
+---
+
+<aside class="sidebar">
+  <div class="sidebar-content">
+    <div class="sidebar-section">
+      <h3 class="sidebar-title">关于</h3>
+      <p class="sidebar-description">{description}</p>
+    </div>
+
+    <div class="sidebar-section">
+      <h3 class="sidebar-title">订阅</h3>
+      <form class="subscribe-form" id="subscribe-form">
+        <input
+          type="email"
+          class="subscribe-input"
+          placeholder="输入邮箱地址"
+          required
+          aria-label="邮箱地址"
+        />
+        <button type="submit" class="subscribe-button">
+          订阅
+        </button>
+      </form>
+      <p class="subscribe-description">
+        订阅我们的邮件列表，获取最新文章
+      </p>
+    </div>
+
+    <div class="sidebar-section">
+      <h3 class="sidebar-title">热门标签</h3>
+      <div class="tag-cloud">
+        <a href="/tag/技术" class="tag">技术</a>
+        <a href="/tag/生活" class="tag">生活</a>
+        <a href="/tag/思考" class="tag">思考</a>
+        <a href="/tag/阅读" class="tag">阅读</a>
+        <a href="/tag/写作" class="tag">写作</a>
+      </div>
+    </div>
+
+    <div class="sidebar-section">
+      <h3 class="sidebar-title">友情链接</h3>
+      <div class="links-list">
+        <a href="https://quaily.com" class="link" target="_blank" rel="noopener noreferrer">
+          烽火官网
+        </a>
+        <a href="https://github.com" class="link" target="_blank" rel="noopener noreferrer">
+          GitHub
+        </a>
+      </div>
+    </div>
+  </div>
+</aside>
+
+<style>
+  .sidebar {
+    width: var(--side-width);
+    flex-shrink: 0;
+    padding-left: var(--spacing-lg);
+  }
+
+  .sidebar-content {
+    position: sticky;
+    top: 72px;
+  }
+
+  .sidebar-section {
+    margin-bottom: var(--spacing-2xl);
+  }
+
+  .sidebar-title {
+    font-family: var(--font-sans);
+    font-size: var(--font-base);
+    font-weight: var(--font-weight-bold);
+    color: var(--text-primary);
+    margin: 0 0 var(--spacing-md) 0;
+    line-height: 1.2;
+  }
+
+  .sidebar-description {
+    font-family: var(--font-sans);
+    font-size: var(--font-sm);
+    color: var(--text-secondary);
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  .subscribe-form {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+  }
+
+  .subscribe-input {
+    width: 100%;
+    padding: var(--spacing-md);
+    border: 1px solid var(--border-medium);
+    border-radius: var(--radius-md);
+    font-family: var(--font-sans);
+    font-size: var(--font-sm);
+    color: var(--text-primary);
+    background-color: var(--bg-primary);
+    transition: all var(--transition-base) ease-in-out;
+  }
+
+  .subscribe-input:focus {
+    outline: none;
+    border-color: var(--accent-red);
+    box-shadow: 0 0 0 3px rgba(230, 57, 70, 0.1);
+  }
+
+  .subscribe-input::placeholder {
+    color: var(--text-tertiary);
+  }
+
+  .subscribe-button {
+    width: 100%;
+    padding: var(--spacing-md);
+    border: none;
+    border-radius: var(--radius-md);
+    background-color: var(--accent-red);
+    color: white;
+    font-family: var(--font-sans);
+    font-size: var(--font-base);
+    font-weight: var(--font-weight-medium);
+    cursor: pointer;
+    transition: all var(--transition-base) ease-in-out;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .subscribe-button:hover {
+    background-color: var(--accent-red-hover);
+    transform: translateY(-1px);
+  }
+
+  .subscribe-button:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(230, 57, 70, 0.2);
+  }
+
+  .subscribe-description {
+    font-family: var(--font-sans);
+    font-size: var(--font-xs);
+    color: var(--text-tertiary);
+    line-height: 1.5;
+    margin: var(--spacing-sm) 0 0 0;
+  }
+
+  .tag-cloud {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-sm);
+  }
+
+  .tag {
+    display: inline-flex;
+    align-items: center;
+    padding: var(--spacing-xs) var(--spacing-sm);
+    background-color: var(--bg-tertiary);
+    color: var(--text-secondary);
+    font-family: var(--font-sans);
+    font-size: var(--font-sm);
+    text-decoration: none;
+    border-radius: var(--radius-sm);
+    transition: all var(--transition-base) ease-in-out;
+  }
+
+  .tag:hover {
+    background-color: var(--accent-red);
+    color: white;
+  }
+
+  .links-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-xs);
+  }
+
+  .link {
+    color: var(--text-secondary);
+    font-family: var(--font-sans);
+    font-size: var(--font-sm);
+    text-decoration: none;
+    transition: color var(--transition-base) ease-in-out;
+  }
+
+  .link:hover {
+    color: var(--accent-red);
+  }
+
+  @media screen and (max-width: 1100px) {
+    .sidebar {
+      width: 100%;
+      padding-left: 0;
+      padding-top: var(--spacing-2xl);
+      border-top: 0.5px solid var(--border-light);
+    }
+
+    .sidebar-content {
+      position: static;
+    }
+  }
+</style>
+
+<script>
+  const form = document.getElementById('subscribe-form') as HTMLFormElement;
+
+  form?.addEventListener('submit', (e) => {
+    e.preventDefault();
+
+    const email = (form.querySelector('input[type="email"]') as HTMLInputElement)?.value;
+
+    if (email) {
+      alert('感谢订阅！我们将发送确认邮件到：' + email);
+      form.reset();
+    }
+  });
+</script>

@@ -1,0 +1,271 @@
+---
+interface Props {
+  isOpen?: boolean;
+}
+
+const { isOpen = false } = Astro.props;
+---
+
+<div
+  class={`search-dialog ${isOpen ? 'open' : ''}`}
+  id="search-dialog"
+  role="dialog"
+  aria-modal="true"
+  aria-label="搜索对话框"
+>
+  <div class="search-backdrop" id="search-backdrop"></div>
+
+  <div class="search-content">
+    <div class="search-header">
+      <div class="search-icon">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <circle cx="11" cy="11" r="8"></circle>
+          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+        </svg>
+      </div>
+
+      <input
+        type="text"
+        class="search-input"
+        placeholder="搜索文章..."
+        id="search-input"
+        aria-label="搜索文章"
+        autocomplete="off"
+      />
+
+      <button
+        class="search-close"
+        id="search-close"
+        aria-label="关闭搜索"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+    </div>
+
+    <div class="search-results" id="search-results">
+      <div class="search-placeholder">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="64"
+          height="64"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <circle cx="11" cy="11" r="8"></circle>
+          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+        </svg>
+        <p>输入关键词搜索文章</p>
+      </div>
+    </div>
+
+    <div class="search-footer">
+      <div class="search-shortcuts">
+        <span class="shortcut">ESC</span>
+        <span>关闭</span>
+      </div>
+      <div class="search-shortcuts">
+        <span class="shortcut">↑</span>
+        <span class="shortcut">↓</span>
+        <span>导航</span>
+      </div>
+      <div class="search-shortcuts">
+        <span class="shortcut">Enter</span>
+        <span>选择</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .search-dialog {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(255, 255, 255, 0.95);
+    z-index: var(--z-modal);
+    display: none;
+    justify-content: center;
+    align-items: flex-start;
+    padding-top: 120px;
+    opacity: 0;
+    transition: opacity var(--transition-slow) ease-in-out;
+  }
+
+  .search-dialog.open {
+    display: flex;
+    opacity: 1;
+  }
+
+  .search-backdrop {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(4px);
+  }
+
+  .search-content {
+    position: relative;
+    width: 100%;
+    max-width: 720px;
+    margin: 0 var(--spacing-xl);
+    background: var(--bg-primary);
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-xl);
+    overflow: hidden;
+  }
+
+  .search-header {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+    padding: var(--spacing-lg);
+    border-bottom: 1px solid var(--border-light);
+  }
+
+  .search-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-tertiary);
+  }
+
+  .search-input {
+    flex: 1;
+    border: none;
+    background: transparent;
+    font-family: var(--font-sans);
+    font-size: var(--font-xl);
+    color: var(--text-primary);
+    outline: none;
+  }
+
+  .search-input::placeholder {
+    color: var(--text-tertiary);
+  }
+
+  .search-close {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--spacing-sm);
+    border: none;
+    background: transparent;
+    color: var(--text-secondary);
+    cursor: pointer;
+    border-radius: var(--radius-md);
+    transition: all var(--transition-base) ease-in-out;
+  }
+
+  .search-close:hover {
+    background-color: var(--bg-tertiary);
+    color: var(--text-primary);
+  }
+
+  .search-results {
+    max-height: 480px;
+    overflow-y: auto;
+    padding: var(--spacing-md);
+  }
+
+  .search-placeholder {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: var(--spacing-4xl) var(--spacing-2xl);
+    color: var(--text-tertiary);
+  }
+
+  .search-placeholder svg {
+    width: 64px;
+    height: 64px;
+    opacity: 0.3;
+    margin-bottom: var(--spacing-md);
+  }
+
+  .search-placeholder p {
+    font-family: var(--font-sans);
+    font-size: var(--font-base);
+    margin: 0;
+  }
+
+  .search-footer {
+    display: flex;
+    justify-content: center;
+    gap: var(--spacing-xl);
+    padding: var(--spacing-md);
+    border-top: 1px solid var(--border-light);
+    background-color: var(--bg-secondary);
+  }
+
+  .search-shortcuts {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    font-family: var(--font-sans);
+    font-size: var(--font-xs);
+    color: var(--text-tertiary);
+  }
+
+  .shortcut {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--spacing-xs) var(--spacing-sm);
+    background-color: var(--bg-tertiary);
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border-light);
+    font-weight: var(--font-weight-medium);
+  }
+
+  @media screen and (max-width: 768px) {
+    .search-dialog {
+      padding-top: 48px;
+    }
+
+    .search-content {
+      margin: 0 var(--spacing-md);
+    }
+
+    .search-input {
+      font-size: var(--font-base);
+    }
+
+    .search-footer {
+      gap: var(--spacing-md);
+      flex-wrap: wrap;
+    }
+  }
+</style>

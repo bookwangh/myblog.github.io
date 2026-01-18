@@ -1,0 +1,115 @@
+---
+interface Props {
+  activeTab?: 'latest' | 'trending';
+}
+
+const { activeTab = 'latest' } = Astro.props;
+---
+
+<div class="post-tabs-wrapper">
+  <div class="q-tabs">
+    <div class="q-tabs-container">
+      <div class="q-tabs-scroller">
+        <button
+          class={`q-tab ${activeTab === 'latest' ? 'active' : ''}`}
+          data-tab="latest"
+          aria-label="最新文章"
+          aria-selected={activeTab === 'latest' ? 'true' : 'false'}
+          role="tab"
+        >
+          <span>最新</span>
+        </button>
+        <button
+          class={`q-tab ${activeTab === 'trending' ? 'active' : ''}`}
+          data-tab="trending"
+          aria-label="热门文章"
+          aria-selected={activeTab === 'trending' ? 'true' : 'false'}
+          role="tab"
+        >
+          <span>最热</span>
+        </button>
+        <div class="q-tabs-indicator"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .post-tabs-wrapper {
+    width: 100%;
+    display: flex;
+    border-bottom: 0.5px solid var(--border-light);
+    background-color: var(--bg-primary);
+  }
+
+  .q-tabs {
+    box-shadow: none !important;
+    width: 100%;
+  }
+
+  .q-tabs-container {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+  }
+
+  .q-tabs-scroller {
+    display: flex;
+    align-items: center;
+    position: relative;
+  }
+
+  .q-tab {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--spacing-md) var(--spacing-lg);
+    margin: 0;
+    border: none;
+    background: transparent;
+    color: var(--text-secondary);
+    font-family: var(--font-sans);
+    font-size: var(--font-base);
+    font-weight: var(--font-weight-medium);
+    cursor: pointer;
+    transition: all var(--transition-base) ease-in-out;
+    position: relative;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .q-tab:hover {
+    color: var(--text-primary);
+  }
+
+  .q-tab.active {
+    color: var(--accent-red) !important;
+  }
+
+  .q-tab.active::after {
+    content: '';
+    position: absolute;
+    bottom: -0.5px;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background-color: var(--accent-red);
+    transition: transform var(--transition-slow) ease-in-out;
+  }
+
+  .q-tab:focus {
+    outline: none;
+    background-color: rgba(0, 0, 0, 0.05);
+  }
+
+  .q-tabs-indicator {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 2px;
+    background-color: var(--accent-red);
+    transition: transform var(--transition-slow) ease-in-out, width var(--transition-slow) ease-in-out;
+    pointer-events: none;
+    display: none;
+  }
+</style>
