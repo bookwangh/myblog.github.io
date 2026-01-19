@@ -1,225 +1,229 @@
+/* optimized.css - Quaily Style Remake */
+
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&family=Noto+Serif+SC:wght@400;700&display=swap');
+
 :root {
-  /* Color Palette */
-  --color-bg: #ffffff;
-  --color-text: #1a1a1a;
+  /* Quaily Colors */
+  --color-bg: #fcfcfc;
+  --color-bg-card: #ffffff;
+  --color-text: #2c2c2c;
   --color-text-light: #666666;
-  --color-border: #eaeaea;
-  --color-accent: #000000;
-  --color-bg-secondary: #f9f9f9;
+  --color-border: #eeeeee;
+  --color-accent: #d93025; /* Quaily Red */
   
   /* Layout */
-  --max-width: 1100px;
-  --header-height: 70px;
-  --gap: 2rem;
+  --max-width: 1180px;
+  --header-height: 56px;
+  --sidebar-width: 320px;
   
   /* Typography */
-  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-  --font-mono: 'JetBrains Mono', monospace;
+  --font-sans: 'Noto Sans SC', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --font-serif: 'Noto Serif SC', serif;
 }
 
-/* Dark Mode Variables */
+/* Dark Mode */
 html.dark-mode {
-  --color-bg: #111111;
-  --color-text: #eeeeee;
-  --color-text-light: #aaaaaa;
+  --color-bg: #121212;
+  --color-bg-card: #1e1e1e;
+  --color-text: #e0e0e0;
+  --color-text-light: #999999;
   --color-border: #333333;
-  --color-accent: #ffffff;
-  --color-bg-secondary: #1a1a1a;
 }
 
-/* Reset & Base */
 body {
   font-family: var(--font-sans);
   background-color: var(--color-bg);
   color: var(--color-text);
-  line-height: 1.6;
+  line-height: 1.75;
   margin: 0;
   padding: 0;
-  transition: background-color 0.3s ease, color 0.3s ease;
+  -webkit-font-smoothing: antialiased;
 }
 
 a {
   color: inherit;
   text-decoration: none;
-  transition: opacity 0.2s;
+  transition: color 0.2s ease;
 }
 
 a:hover {
-  opacity: 0.7;
+  color: var(--color-accent);
 }
 
-img {
-  max-width: 100%;
-  height: auto;
-  display: block;
-}
-
-/* Layout Containers */
-.container, .header-container, .main-content {
-  max-width: var(--max-width);
-  margin: 0 auto;
-  padding: 0 1.5rem;
-}
-
-/* Header Styles */
+/* === Sticky Gradient Header === */
 header {
   height: var(--header-height);
-  background: rgba(255, 255, 255, 0.8);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  border-bottom: 1px solid var(--color-border);
   position: sticky;
   top: 0;
   z-index: 1000;
-  display: flex;
-  align-items: center;
+  
+  /* Quaily Signature Glass Effect */
+  background: rgba(252, 252, 252, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(0,0,0,0.05);
+  box-shadow: 0 1px 2px rgba(0,0,0,0.02);
 }
 
 html.dark-mode header {
-  background: rgba(17, 17, 17, 0.8);
+  background: rgba(18, 18, 18, 0.85);
+  border-bottom: 1px solid rgba(255,255,255,0.05);
 }
 
-.header-content {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 100%;
+.header-container {
+  max-width: var(--max-width);
+  margin: 0 auto;
   height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 1.5rem;
 }
 
 .site-title {
+  font-family: var(--font-serif);
   font-weight: 700;
-  font-size: 1.25rem;
+  font-size: 1.4rem;
   letter-spacing: -0.02em;
 }
 
 .nav {
   display: flex;
-  gap: 2rem;
+  gap: 1.5rem;
 }
 
 .nav-item {
   font-size: 0.95rem;
   font-weight: 500;
   color: var(--color-text-light);
-  position: relative;
+  padding: 4px 8px;
+  border-radius: 6px;
+  transition: all 0.2s;
 }
 
-.nav-item.active, .nav-item:hover {
+.nav-item:hover, .nav-item.active {
   color: var(--color-text);
+  background-color: rgba(0,0,0,0.05);
 }
 
-/* Post Cards */
-.post-list {
+html.dark-mode .nav-item:hover {
+  background-color: rgba(255,255,255,0.1);
+}
+
+/* === Layout: Main + Sidebar === */
+.main-content {
+  max-width: var(--max-width);
+  margin: 2.5rem auto;
+  padding: 0 1.5rem;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 2rem;
-  margin-top: 2rem;
+  grid-template-columns: 1fr var(--sidebar-width);
+  gap: 3rem;
+}
+
+/* Post List (Clean & Minimal) */
+.post-list {
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
 }
 
 .post-card {
-  background: var(--color-bg);
-  border: 1px solid var(--color-border);
-  border-radius: 12px;
-  overflow: hidden;
-  transition: transform 0.2s, box-shadow 0.2s;
-  height: 100%;
+  /* No card background, just clean layout */
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
+  display: flex;
+  flex-direction: row-reverse; /* Image right */
+  gap: 1.5rem;
+  padding-bottom: 2.5rem;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.post-card:last-child {
+  border-bottom: none;
+}
+
+.post-card:hover {
+  transform: none; /* Disable lift effect */
+}
+
+.post-card img {
+  width: 200px;
+  height: 140px;
+  object-fit: cover;
+  border-radius: 6px;
+  flex-shrink: 0;
+}
+
+.post-content {
+  flex: 1;
   display: flex;
   flex-direction: column;
 }
 
-.post-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 10px 20px rgba(0,0,0,0.05);
-}
-
-html.dark-mode .post-card:hover {
-  box-shadow: 0 10px 20px rgba(0,0,0,0.3);
-}
-
-.post-card img {
-  width: 100%;
-  height: 200px;
-  object-fit: cover;
-  border-bottom: 1px solid var(--color-border);
-}
-
 .post-card h3 {
-  padding: 1.25rem 1.25rem 0.5rem;
-  margin: 0;
-  font-size: 1.2rem;
+  font-family: var(--font-serif);
+  font-size: 1.4rem;
+  margin: 0 0 0.5rem 0;
+  font-weight: 700;
   line-height: 1.3;
 }
 
 .post-card .date {
-  padding: 0 1.25rem;
   font-size: 0.85rem;
   color: var(--color-text-light);
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.8rem;
+  font-family: var(--font-sans);
 }
 
 .post-card .excerpt {
-  padding: 0 1.25rem 1.25rem;
-  font-size: 0.95rem;
+  font-size: 1rem;
   color: var(--color-text-light);
+  line-height: 1.6;
   margin: 0;
-  flex-grow: 1;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
 /* Sidebar */
-.sidebar-section {
-  margin-bottom: 2.5rem;
+.sidebar {
+  padding-left: 2rem;
+  border-left: 1px solid var(--color-border);
 }
 
 .sidebar-title {
-  font-size: 0.85rem;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  color: var(--color-text-light);
-  margin-bottom: 1rem;
-  border-bottom: 1px solid var(--color-border);
-  padding-bottom: 0.5rem;
-}
-
-/* Buttons & Inputs */
-.subscribe-form {
-  display: flex;
-  gap: 0.5rem;
-}
-
-input[type="email"] {
-  flex: 1;
-  padding: 0.6rem;
-  border-radius: 6px;
-  border: 1px solid var(--color-border);
-  background: var(--color-bg-secondary);
+  font-size: 0.9rem;
+  font-weight: 700;
+  margin-bottom: 1.2rem;
   color: var(--color-text);
-}
-
-button {
-  padding: 0.6rem 1.2rem;
-  border-radius: 6px;
   border: none;
-  background: var(--color-accent);
-  color: var(--color-bg);
-  font-weight: 500;
-  cursor: pointer;
-  transition: opacity 0.2s;
 }
 
-button:hover {
-  opacity: 0.9;
-}
+/* Mobile */
+@media (max-width: 900px) {
+  .main-content {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+  
+  .sidebar {
+    border-left: none;
+    padding-left: 0;
+    border-top: 1px solid var(--color-border);
+    padding-top: 2rem;
+  }
 
-/* Mobile Nav */
-@media (max-width: 768px) {
-  .header-content {
-    padding: 0 1rem;
+  .post-card {
+    flex-direction: column;
+    gap: 1rem;
   }
-  
-  .nav {
-    display: none; /* Hide desktop nav */
+
+  .post-card img {
+    width: 100%;
+    height: 200px;
   }
-  
-  /* Mobile menu styles would go here, usually toggled via JS */
 }

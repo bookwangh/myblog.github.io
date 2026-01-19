@@ -1,0 +1,17 @@
+
+> blog-project@0.0.1 dev
+> astro dev
+
+16:55:52 [types] Generated 1ms
+16:55:52 [content] Syncing content
+16:55:52 [content] Synced content
+16:55:52 [vite] Port 4321 is in use, trying another one...
+16:55:52 [vite] Port 4322 is in use, trying another one...
+16:55:52 [vite] Port 4323 is in use, trying another one...
+
+ astro  v5.7.12 ready in 453 ms
+
+┃ Local    http://localhost:4324/
+┃ Network  use --host to expose
+
+16:55:52 watching for file changes...
